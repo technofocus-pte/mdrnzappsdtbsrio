@@ -11,6 +11,8 @@ functionalities as tools. In this lab, you start with a simple to-do
 list app. By the end, you'll be able to create, update, and manage tasks
 with an agent in an App Service app.
 
+**Duration** - 50 minutes
+
 ## Task 1: Execute the ASP.NET app locally
 
 In this exercise, you will execute the application in the local system.
@@ -354,3 +356,4 @@ connection variables.
 
 In this lab, you have taken a simple .NET app and learnt to induce AI
 into it.
+
