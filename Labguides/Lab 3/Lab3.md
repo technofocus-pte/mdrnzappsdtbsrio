@@ -397,9 +397,12 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
 9.  Press **Ctrl+C** to terminate the running command. Next, deploy the
     application using the following command.
 
+    +++azd env set AZURE_RESOURCE_GROUP rg-proj@lab.labinstance.id+++
+
     +++azd up+++
 	
-	Select **Resource Group** **rg-proj@lab.labinstance.id**
+	>[!Alert] When asked to create a new resource group, Select **Enter**.
+	> ( **rg-proj@lab.labinstance.id** should be showing as the default value )
 	
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image52.png)
@@ -459,3 +462,4 @@ contextual Q&A with citations. The application is tested locally in
 GitHub Codespaces using managed identity for secure access. Finally,
 it’s deployed to Azure App Service and validated through a live chat
 interface powered by Azure AI.
+
