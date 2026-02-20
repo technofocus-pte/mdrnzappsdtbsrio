@@ -314,7 +314,7 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
 
 21. Navigate to Codespace terminal and set the search index name as an AZD environment variable:
 
-    +++azd env set SEARCH_INDEX_NAME <your-search-index-name> +++
+    +++azd env set SEARCH_INDEX_NAME <your-search-index-name>+++
 
     >[!Note] Replace <your-search-index-name> with the index name you
 copied previously. AZD uses this variable in subsequent deployments to
@@ -395,14 +395,14 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
     incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image51.png)
 
 9.  Press **Ctrl+C** to terminate the running command. Next, deploy the
-    application using the following command.
+    application using the following commands.
 
     +++azd env set AZURE_RESOURCE_GROUP rg-proj@lab.labinstance.id+++
 
     +++azd up+++
 	
 	>[!Alert] When asked to create a new resource group, Select **Enter**.
-	> ( **rg-proj@lab.labinstance.id** should be showing as the default value )
+	> ( **rg-proj@lab.labinstance.id**
 	
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image52.png)
@@ -462,4 +462,3 @@ contextual Q&A with citations. The application is tested locally in
 GitHub Codespaces using managed identity for secure access. Finally,
 it’s deployed to Azure App Service and validated through a live chat
 interface powered by Azure AI.
-
