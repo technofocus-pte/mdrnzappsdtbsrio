@@ -17,53 +17,50 @@ with an agent in an App Service app.
 
 In this exercise, you will execute the application in the local system.
 
-1.  From **C:** **extract** the **Labfiles zip** file.
-
 2.  Open VS Code. Select **Open Folder**.
 
-    ![](./media/image1.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image1.png)
 
 3.  Select **app-service-agentic-semantic-kernel-ai-foundry-agent-main**
     folder from **C:/Labfiles**.
 
-    ![](./media/image2.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image2.png)
 
 4.  Select **Yes, I trust the authors** in the pop up.
 
-    ![](./media/image3.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image3.png)
 
 5.  Select the 3 dots in the top menu. Select **Terminal** -\> **New
     Terminal** to open the VSCode terminal and execute the app.
 
-    ![](./media/image4.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image4.png)
 
 6.  Once opened, execute the below command in the terminal to install
     the NuGet package Microsoft.Agents.AI of the specified version into
     the current project.
 
-    +++dotnet add package Microsoft.Agents.AI --version
-1.0.0-preview.251204.1+++
+    +++dotnet add package Microsoft.Agents.AI --version 1.0.0-preview.251204.1+++
 
-    ![](./media/image5.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image5.png)
 
 7.  Next, execute the command +++dotnet build+++ to build the project.
 
-    ![](./media/image6.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image6.png)
 
 8.  Next, execute the command +++dotnet run+++ to execute the project.
 
-    ![](./media/image7.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image7.png)
 
 9.  Once the command gets executed, open a browser and open
     +++http://localhost:5280+++
 
-    ![](./media/image8.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image8.png)
 
 10. Select the Microsoft Agent Framework option from the left and you
     can see that you get a message that it is not configured. We will
     update it later in this lab.
 
-    ![](./media/image9.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image9.png)
 
 11. Press Ctrl+C in the VS Code terminal in order to stop the
     application.
@@ -73,19 +70,19 @@ In this exercise, you will execute the application in the local system.
 The agent is initialized as a service (in Program.cs) in a provider and
 injected into the respective Blazor component.
 
-The AgentFrameworkProvider is initialized
-in *Services/AgentFrameworkProvider.cs*. The initialization code does
+The AgentFrameworkProvider is initialized
+in *Services/AgentFrameworkProvider.cs*. The initialization code does
 the following:
 
-- Creates an IChatClient from Azure OpenAI using the AzureOpenAIClient.
+- Creates an IChatClient from Azure OpenAI using the AzureOpenAIClient.
 
-- Gets the TaskCrudTool instance that encapsulates the functionality of
-  the CRUD application (in *Tools/TaskCrudTool.cs*).
-  The Description attributes on the tool methods help the agent
+- Gets the TaskCrudTool instance that encapsulates the functionality of
+  the CRUD application (in *Tools/TaskCrudTool.cs*).
+  The Description attributes on the tool methods help the agent
   determine how to call them.
 
-- Creates an AI agent using CreateAIAgent() with instructions and tools
-  registered via AIFunctionFactory.Create().
+- Creates an AI agent using CreateAIAgent() with instructions and tools
+  registered via AIFunctionFactory.Create().
 
 - Creates a thread for the agent to persist conversation across
   navigation.
@@ -123,8 +120,8 @@ return (agent, thread);
 ```
 
 Each time the user sends a message, the Blazor component
-(in *Components/Pages/AgentFrameworkAgent.razor*)
-calls Agent.RunAsync() with the user input and the agent thread. The
+(in *Components/Pages/AgentFrameworkAgent.razor*)
+calls Agent.RunAsync() with the user input and the agent thread. The
 agent thread keeps track of the chat history.
 
 var response = await this.Agent.RunAsync(sentInput, this.agentThread);
@@ -137,75 +134,75 @@ application.
 
 1.  In the terminal, execute the command +++az login+++
 
-    ![](./media/image10.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image10.png)
 
 2.  Select Work or school account.
 
-    ![](./media/image11.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image11.png)
 
 3.  Login using your login credentials
 
     - Username - +++@lab.CloudPortalCredential(User1).Username+++
 
-    - Password - +++@lab.CloudPortalCredential(User1).Password+++
+    - TAP - +++@lab.CloudPortalCredential(User1).AccessToken+++
 
-    ![](./media/image12.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image12.png)
 
-    ![](./media/image13.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image13.png)
 
 4.  Select **No, this app only**.
 
-    ![](./media/image14.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image14.png)
 
 5.  Select **Enter** to accept the subscription.
 
-    ![](./media/image15.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image15.png)
 
 6.  As the next step, execute the command, +++azd auth login+++ and
     ensure that you are logged in.
 
-    ![](./media/image16.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image16.png)
 
-    ![](./media/image17.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image17.png)
 
 7.  Once this is done, execute +++azd up+++ to deploy the resources.
 
-    ![](./media/image18.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image18.png)
 
 8.  Enter the environment name as +++envt@lab.LabInstance.Id+++
 
-    ![](./media/image19.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image19.png)
 
-    ![](./media/image20.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image20.png)
 
 9.  Select the subscription. Press **Enter** to do so since you will
     have only one subscription listed.
 
-    ![](./media/image21.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image21.png)
 
 10. Move your arrow key and select **ResourceGroup1** as the Resource
     group.
 
-    ![](./media/image22.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image22.png)
 
 11. The resources will get created and it will take around 10 minutes to
     complete.
 
-    ![](./media/image23.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image23.png)
 
 12. Once completed, the **endpoint** is listed in the terminal.
 
-    ![](./media/image24.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image24.png)
 
 13. Open the endpoint url to access the application from Azure.
 
-    ![](./media/image25.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image25.png)
 
-    ![](./media/image26.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image26.png)
 
-    ![](./media/image27.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image27.png)
 
-    ![](./media/image28.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image28.png)
 
 ## Task 3: Create and configure the Microsoft Foundry resource
 
@@ -213,45 +210,45 @@ In this exercise, you will create the Microsoft Foundry resource and
 deploy a model to be used.
 
 1.  Open +++https://ai.azure.com+++ and sign in using your credentials.
-    Ensure that the top **New Foundry** radio button is set to active.
+    Ensure that the top **New Foundry** radio button is set to active.
 
     - Username - +++@lab.CloudPortalCredential(User1).Username+++
 
-    - Password - +++@lab.CloudPortalCredential(User1).Password+++
+    - TAP - +++@lab.CloudPortalCredential(User1).AccessToken+++
 
 2.  In the Select a project to continue dialog, select **Create a new
     project**.
 
-    ![](./media/image29.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image29.png)
 
-3.  Enter the project name as <+++proj@lab.LabInstance.Id>+++, select
+3.  Enter the project name as +++proj@lab.LabInstance.Id+++, select
     the Resource group as **ResourceGroup1** and then select **Create**.
 
-    ![](./media/image30.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image30.png)
 
-    ![](./media/image31.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image31.png)
 
 4.  Switch back to **Old Foundry**. From the Overview page, select Azure
     OpenAI, copy the endpoint value and save it in a notepad.
 
-    ![](./media/image32.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image32.png)
 
 5.  Select Models + endpoints from the left pane. Select **+ Deploy
     model** -> **Deploy base model**.
 
-    ![](./media/image33.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image33.png)
 
 6.  Select gpt-4.1 and click on **Confirm**.
 
-    ![](./media/image34.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image34.png)
 
 7.  Click on **Deploy**.
 
-    ![](./media/image35.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image35.png)
 
 8.  Copy and paste the model name to the notepad.
 
-    ![](./media/image36.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image36.png)
 
 ## Task 4: Assign required permissions
 
@@ -263,51 +260,51 @@ Foundry resource.
 
     - Username - +++@lab.CloudPortalCredential(User1).Username+++
 
-    - Password - +++@lab.CloudPortalCredential(User1).Password+++
+    - TAP - +++@lab.CloudPortalCredential(User1).AccessToken+++
 
-    ![](./media/image37.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image37.png)
 
 1.  Select the Foundry resource that you created in the last task.
 
-    ![](./media/image38.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image38.png)
 
 2.  Select **Access control (IAM)** from the left pane.
 
-    ![](./media/image39.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image39.png)
 
 3.  Select **+ Add** -\> **Add role assignment**.
 
-    ![](./media/image40.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image40.png)
 
 4.  Search for and select +++Cognitive Services OpenAI User+++.
 
-    ![](./media/image41.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image41.png)
 
 5.  Select **Next** to move ahead.
 
-    ![](./media/image42.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image42.png)
 
 6.  Select **Managed identity** and then select **Select members**.
 
-    ![](./media/image43.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image43.png)
 
 7.  Select **Managed identity** as **Foundry project** and then select
     the proj@lab.LabInstance.Id.
 
-    ![](./media/image44.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image44.png)
 
 8.  Select **Review + assign** in the next two screens.
 
-    ![](./media/image45.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image45.png)
 
-    ![](./media/image46.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image46.png)
 
 ## Task 5: Configure connection variables in your sample application
 
 In this task, you will configure your sample application with the
 connection variables.
 
-1.  From VS Code, open *appsettings.json*. Using the values you copied
+1.  From VS Code, open *appsettings.json*. Using the values you copied
     earlier from the Foundry portal, configure the following variables.
 
     - AzureOpenAIEndpoint - Azure OpenAI endpoint (copied from the classic
@@ -316,44 +313,45 @@ connection variables.
     - ModelDeployment - Model name in the deployment (copied from the model
     playground).
 
-    ![](./media/image47.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image47.png)
 
 2.  From the terminal execute +++dotnet run+++
 
-    ![](./media/image48.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image48.png)
 
-3.  Open a browser and navigate to +++localhost:5802+++
+3.  Open a browser and navigate to +++localhost:5820+++
+
+	>[!Alert] It can take up to **10 minutes** for the localhost address to finish building. 
 
 4.  Add few tasks in the app.
 
-    ![](./media/image49.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image49.png)
 
-    ![](./media/image50.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image50.png)
 
 5.  Now, select **Microsoft Agent Framework** from the left pane and you
     can see that the chat opens up.
 
-    ![](./media/image51.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image51.png)
 
 6.  Enter Hi or any message like +++What are my current tasks+++ and get
     the response from the agent.
 
-    ![](./media/image52.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image52.png)
 
-    ![](./media/image53.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image53.png)
 
 7.  Now, execute +++azd up+++ to deploy the app changes.
 
-    ![](./media/image54.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image54.png)
 
-    ![](./media/image55.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image55.png)
 
 8.  Open the endpoint to view the app in the Azure.
 
-    ![](./media/image56.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image56.png)
 
 ## Summary
 
 In this lab, you have taken a simple .NET app and learnt to induce AI
 into it.
-
