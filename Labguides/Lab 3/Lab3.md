@@ -74,7 +74,7 @@ provides a complete development environment with all required
 preinstalled tools.
 
 2.  Navigate to the GitHub repository
-    +++https://github.com/technofocus-pte/appserviceragopenai+++ and
+    +++https://github.com/technofocus-pte/appserviceragopenai+++ and 
     sign in using your GithHub credentials.
 
 3.  Click on **Fork** to fork the repo.
@@ -140,26 +140,35 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image14.png)
 
-4.  In the terminal, execute the following command to provision the
+1. In the Github codespace, open the **infra** folder on the left hand side and select the **main.bicep** file. Verify line 8 uses the correct unique suffix for naming resources by using **tags.LabInstance**.
+
+   >[!Alert] If you notice line 8 still reads as: param resourceToken string = **uniqueString(resourceGroup().id, environmentName)**,
+   >please change **uniqueString(resourceGroup().id, environmentName)** to +++resourceGroup().tags.LabInstance+++ and select **ctrl+s** to save the change.
+
+4.  In the terminal, execute the following two commands to provision the
     Azure resources with the AZD template:
+
+    +++azd env set AZURE_RESOURCE_GROUP @lab.CloudResourceGroup(ResourceGroup2).Name+++
+
+    - **Enter a new environment Name:** +++blazorenv@lab.LabInstance.Id+++
 
     +++azd provision+++
 
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image15.png)
 
-5.  When prompted, enter the following details:
-
-    - **Enter a new environment Name:** +++blazorenv@lab.LabInstance.Id+++
+6.  When prompted, enter the following details:
 
     - **Select Azure Subscription to use:** @lab.CloudSubscription.Name
 
     - **Pick a resource group to use:** @lab.CloudResourceGroup(ResourceGroup1).Name
+  
+    	>[!Note] Since we set the resource group as a variable prior to this step, the prompt to select **@lab.CloudResourceGroup(ResourceGroup2).Name** may not be necessary.
 
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image16.png)
 
-6.  Wait for the deployment to complete; it will take 5-10 mins. This
+7.  Wait for the deployment to complete; it will take 5-10 mins. This
     process will:
 
     - Create all required Azure resources.
@@ -462,4 +471,5 @@ contextual Q&A with citations. The application is tested locally in
 GitHub Codespaces using managed identity for secure access. Finally,
 it’s deployed to Azure App Service and validated through a live chat
 interface powered by Azure AI.
+
 
