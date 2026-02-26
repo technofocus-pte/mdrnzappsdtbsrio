@@ -319,7 +319,7 @@ connection variables.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image48.png)
 
-3.  Open a browser and navigate to +++localhost:5820+++
+3.  Open a browser and navigate to +++localhost:5280+++
 
 	>[!Alert] It can take up to **10 minutes** for the localhost address to finish building. 
 
@@ -355,3 +355,4 @@ connection variables.
 
 In this lab, you have taken a simple .NET app and learnt to induce AI
 into it.
+
