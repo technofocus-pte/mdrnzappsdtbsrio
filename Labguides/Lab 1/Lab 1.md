@@ -1,378 +1,370 @@
-# Lab 1 - GitHub Copilot App Modernization for Java - Migrate to Azure
+# 실습 1 - Java를 위한 GitHub Copilot App Modernization - Azure로 마이그레이션
 
-A lab that walks through assessing and migrating the sample Java
-application "asset-manager" from AWS/RabbitMQ/Postgres to Azure Blob
-Storage, Azure Service Bus, and Azure Database for PostgreSQL using
-GitHub Copilot App Modernization for Java.
+AWS/RabbitMQ/Postgres에서 Java용 GitHub Copilot App Modernization을
+사용해 샘플 Java 애플리케이션 "asset-manager"를 평가하고 Azure Blob
+Storage, Azure Service Bus, 및 PostgreSQL용 Azure Database로
+마이그레이션하는 과정을 안내하는 실습입니다.
 
-**Overview**
+개요
 
-This hands-on lab demonstrates assessing and migrating a Java web +
-worker application to Azure using GitHub Copilot App Modernization for
-Java. The lab is organized as small focused tasks with verification
-points after each major step.
+이 실습은 Java용 GitHub Copilot App Modernization을 사용하여 Java웹 +
+워커 애플리케이션을 Azure로 평가하고 마이그레이션하는 방법을 시연합니다.
+이 실습은 각 주요 단계마다 검증 지점이 있는 집중 작업으로 조직되어
+있습니다.
 
-GitHub Copilot App Modernization for Java, also referred to as App
-Modernization for Java or AppMod, assists with app assessment, planning
-and code remediation using a Visual Studio Code Extension and GitHub
-Copilot. It automates repetitive tasks, boosting developer confidence
-and speeding up the Azure migration and ongoing optimization.
+Java용 GitHub Copilot App Modernization (Java용 App Modernization 또는
+AppMod라고도 함)은 Visual Studio Code Extension 및 GitHub Copilot을
+사용하여 앱 평가, 계획 및 코드 복원을 지원합나디. 반복적인 작업을
+자동화하여 개발자의 신뢰를 높이고 Azure 마이그레이션과 지속적인 최적화를
+가속화합니다.
 
-**About the Project**
+**프로젝트 소개**
 
-This application consists of two sub-modules, **Web** and **Worker**.
-Both of them contain functions of using storage service and message
-queue.
+이 애플리케이션은 **Web**과 **Worker** 두 개의 하위 모듈로 구성됩니다.
+두 경우 모두 스토리지 서비스와 메시지 큐 사용 가능을 포함하고 있습니다.
 
-**Original Infrastructure**
+**원래 인프라**
 
-The project uses the following original infrastructure:
+이 프로젝트는 다음과 같은 원래 인프라를 사용합니다:
 
-- AWS S3 for image storage, using password-based authentication (access
-  key/secret key)
+- 비밀번호 기반 인증 (접근 키/비밀 키)을 사용하여 이미지 저장을 위한 AWS
+  S3 
 
-- RabbitMQ for message queuing, using password-based authentication
+- 비밀번호 기반 인증을 사용하여 메시지 큐잉을 위한 RabbitMQ 
 
-- PostgreSQL database for metadata storage, using password-based
-  authentication
+- 비밀번호 기반 인증을 사용하여 메타데이터 저장을 위한 PostgreSQL
+  데이터베이스
 
-**Original Architecture**
+**원래 아키텍처**
 
-![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image1.png)
+![](./media/image1.png)
 
-**Expected infrastructure after migration**
+**마이그레이션 후 예산되는 인프라**
 
-After migration, the project will use the following Azure services
+마이그레이션 후에는 다음 Azure 서비스를 사용할 것입니다
 
-- Azure Blob Storage for image storage, using managed identity
-  authentication
+- 관리형 ID 인증을 사용하여 이미지 저장을 위한 Azure Blob Storage
 
-- Azure Service Bus for message queuing, using managed identity
-  authentication
+- 관리형 ID 인증을 사용하여 메시지 큐일을 위한 Azure Service Bus
 
-- Azure Database for PostgreSQL for metadata storage, using managed
-  identity authentication
+- 관리형 ID 인증을 사용하여 메타데이터 저자을 위한 PostgreSQL용 Azure
+  Database
 
-**Migrated Architecture**
+**마이그레이션된 아키텍처**
 
-Managed identity based authentication
+관리형 ID 기반 인증
 
-![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image2.png)
+![](./media/image2.png)
 
-## Prerequisites
+## 필수 구성 요소
 
-In order to execute this lab, you will need a Github account with Github
-Copilot enabled. If you do not have one, please create one form here -
+이 실습을 진행하려면 Github Copilot이 활성화된 Github 계정이 필요합니다.
+만약 없다면 여기에서 하나의 양식을 생서하세요 -
 +++https://github.com/signup+++
 
-## Task 1: Install the GitHub Copilot App Modernization extension
+## 작업 1: GitHub Copilot App Modernization 확장을 설치하기
 
-In this task, you will install the extension in the VS Code that is
-required for this lab execution.
+이 작업에서는 이 실습 실생에 필요한 확장을 VS Code에 설치해야 합니다.
 
-1.  Open the VS Code. Select **Extensions** from the left pane.
+1.  VS Code를 여세요. 왼쪽 창에서 **Extensions**를 선택하세요.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image3.png)
+![](./media/image3.png)
 
-2.  Search for and select +++GitHub Copilot app modernization+++ and
-    then select **Install**.
+2.  +++GitHub Copilot app modernization+++를 검색하고 선택하고
+    **Install**을 선택하세요.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image4.png)
+![](./media/image4.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image5.png)
+![](./media/image5.png)
 
-The GitHub Copilot App Modernization extension is what will help in
-modernizing the apps easily.
+GitHub Copilot App Modernization 확장 기능은 앱을 쉽게 현대화하는 데
+도움이 됩니다.
 
-## Task 2: Understand the existing application
+## 작업 2: 기존 애플리케이션을 이해하기
 
-Go through the existing code to understand the configuration of
-PostgreSQL, AWS and RabbitMQ.
+기존 코드를 살펴보면서 PostgreSQL, AWS 및 RabbitMQ의 구성을 이해하세요.
 
-## Task 3: Assess Your Java Application
+## 작업 3: Java 애플리케이션을 평가하기
 
-2.  Open VSCode and click on **Select Folder**.
+1.  **C:** **extract**에서 **Labfiles zip** 파일을 선택하세요.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image6.png)
+2.  VSCode를 열고 **Select Folder**를 클릭하세요.
 
-3.  Select **GitHub-Copilot-App-Modernization-for-java** folder from
-    **C:\Labfile** and click on **Select folder**.
+![](./media/image6.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image7.png)
+3.  **C:\Labfile**에서 **GitHub-Copilot-App-Modernization-for-java**
+    폴더를 선택하고 **Select folder**를 클릭하세요.
 
-4.  Once the folder opens, select **Yes, I trust the authors** option.
+![](./media/image7.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image8.png)
+4.  폴더가 열려면 **Yes, I trust the authors** 옵션을 선택하세요.
 
-5.  At the right bottom of VSCode, you can see the GitHub Copilot icon.
+![](./media/image8.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image9.png)
+5.  VSCode 오른쪽 하단에 GitHub Copilot 아이콘을 볼 수 있습니다.
 
-6.  Select the **Continue with GitHub** option.
+![](./media/image9.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image10.png)
+6.  **Continue with GitHub** 옵션을 선택하세요.
 
-7.  Login using your **GitHub id** and **Authorize Visual Studio Code**.
+![](./media/image10.png)
 
-8.  You can now see that the GitHub Copilot is enabled.
+7.  **GitHub id** 및 **Authorize Visual Studio Code**를 사용하여
+    로그인하세요.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image11.png)
+8.  이제 GitHub Copilot이 활성화된 것을 볼 수 있습니다.
 
-9.  From the left pane, select the **extension** – **GitHub Copilot for
-    App Modernization**.
+![](./media/image11.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image12.png)
+9.  왼쪽 창에서 **extension** – **GitHub Copilot for App
+    Modernization**을 선택하세요.
 
-10. Select the drop down next to Auto in the GitHub chat to select the
-    model. **Claude Sonnet 4.5** works best for App modernization. If
-    you have a premium GitHub license, you can select that. Else, you
-    can select **Claude Haiku 4.5**.
+![](./media/image12.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image13.png)
+10. GitHub 채팅에서 Auto 옆 드롭다운을 선택해서 모델을 선택하세요.
+    **Claude Sonnet 4.5**는 앱 현대화에 가장 적합합니다. 프리미멈 GitHub
+    라이선스가 있다면 선택할 수 있고 그렇지 않으면 **Claude Haiku
+    4.5**를 선택할 수 있습니다.
 
-11. From the Quick Start section of GitHub Copilot App Modernization,
-    select **Start Assessment**.
+![](./media/image13.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image14.png)
+11. GitHub Copilot App Modernization의 Quick Start 섹션에서 **Start
+    Assessment**를 선택하세요.
 
-12. Check the progress of the assessment.
+![](./media/image14.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image15.png)
+12. 평가 진행 상황을 확인하세요.
 
-13. You can see that the assessment starts and proceeds gradually.
+![](./media/image15.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image16.png)
+13. 평가가 시작되어 점진적으로 진행되는 것을 볼 수 있습니다.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image17.png)
+![](./media/image16.png)
 
-14. This takes around 5 minutes to complete. Once done, the **Assessment
-    Report** is displayed as in the screenshot below.
+![](./media/image17.png)
 
-    The **Application Information** section lists the basic information
-about the application.
+14. 이 과정은 약 5분 정도 걸립니다. 완료되면 **Assessment Report**는
+    아래 스크린샷과 같이 표시됩니다.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image18.png)
+**Application Information** 섹션에는 신청서에 대한 기본 정보가 나열되어
+있습니다.
 
-15. The **Issue Summary** section lists down the issues in 2 categories
-    **– Cloud Readiness** and **Java Upgrade**.
+![](./media/image18.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image19.png)
+15. **Issue Summary** 섹션은 이슈를 두 가지 범주로 나눕니다 **– Cloud
+    Readiness** 및 **Java Upgrade**.
 
-16. Scroll down to see the details on the issues. In this case, you have
-    **9 issues** under the **Cloud Readiness category** and there are
-    non under Java Upgrade category.
+![](./media/image19.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image20.png)
+16. 이슈에 대한 자세한 내용을 보려면 아래로 스크롤하세요. 이 경우
+    **Cloud Readiness category**에는 **9 issues**가 없고 Java Upgrade
+    카테고리에는 없는 문제가 있습니다.
 
-17. Expand each section to see what the issue is and how it can be
-    resolved.
+![](./media/image20.png)
 
-18. First issue is on the **Database Migration (PostgreSQL)** and the
-    **Solution** is to migrate to **Azure Database for PostgreSQL**
+17. 각 섹션을 확장해 문제가 무엇인지, 그리고 어떻게 핼결할 수 있는지
+    살펴보세요.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image21.png)
+18. 첫 번째 문제는 **Database Migration (PostgreSQL)**에 관한 것이며
+    **Solution**은 **Azure Database for PostgreSQL**로 마이그레이션하는
+    것입니다
 
-19. When you further check the PostgreSQL database found option, you
-    will see how many files are impacted and also a detailed
-    explanation.
+![](./media/image21.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image22.png)
+19. PostgreSQL 데이터베이스 찾기 옵션을 더 확인하면 영향받는 파일 수와
+    자세한 설명을 확인할 수 잇습니다.
 
-20. The next one is Messaging Service Migration (Spring AMQP Rabbit MQ)
+![](./media/image22.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image23.png)
+20. 다음은 Messaging Service Migration (Spring AMQP Rabbit MQ)입니다
 
-21. Expand **Spring RabbitMQ usage found in code** to understand the
-    details under that.
+![](./media/image23.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image24.png)
+21. 세부 사항을 이해하려면 **Spring RabbitMQ usage found in code**를
+    확장하세요.
 
-22. Expand **Spring AMQP dependency** found to see the files affected
-    and the details of them.
+![](./media/image24.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image25.png)
+22. 영향을 받는 파일과 세부 정보를 확인하려면 **Spring AMQP dependency**
+    파일을 확장하세요.
 
-23. Expand **RabbitMQ connection string, username or password found in
-    configuration file**
+![](./media/image25.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image26.png)
+23. **RabbitMQ connection string, username or password found in
+    configuration file**을 확장하세요
 
-24. The next issue is the **Storage Migration (AWS S3)** to which the
-    solution is **Migrate from AWS S3 to Azure Blob Storage**.
+![](./media/image26.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image27.png)
+24. 다음 문제는 **Storage Migration (AWS S3)**으로 솔루션은 **Migrate
+    from AWS S3 to Azure Blob Storage**입니다.
 
-25. Expand **AWS S3 usage found** to view the details.
+![](./media/image27.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image28.png)
+25. 세부 사항을 보려면 **AWS S3 usage found**를 확장하세요.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image29.png)
+![](./media/image28.png)
 
-26. Expand **AWS S3 dependency usage found** to view the details.
+![](./media/image29.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image30.png)
+26. 세부 사항을 보려면 **AWS S3 dependency usage found**를 획장하세요.
 
-## Task 4: Migrate to Azure Database for PostgreSQL Flexible Server
+![](./media/image30.png)
 
-1.  We will start with the **Database Migration**. Select **Run Task**
-    against the Database Migration(PostgreSQL) issue that is listed
-    under Issues -\> Issue Category in the Assessment Report.
+## 작업 4: Azure Database for PostgreSQL Flexible Server로 마이그레이션하기
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image31.png)
+1.  **Database Migration**부터 시작합니다. Assessment Report의 Issues
+    -\> Issue Category에 나열된 Database Migration(PostgreSQL) 이슈에
+    대해 **Run Task**를 선택하세요.
 
-2.  The task will start and the details will get populated in the chat
-    window.
+![](./media/image31.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image32.png)
+2.  작업이 시작되고 자세한 내용은 채팅창에 체워집니다.
 
-3.  As the task continues, the GitHub Copilot first **plans** the
-    **execution** and then **starts** making **changes** to the
-    appropriate **files**. Each **action** is described in the **chat**
-    window. As it makes **changes** to the **files**, the details are
-    populated and asks for **confirmation** from the user to **keep**
-    the changes or **discard** them. Also, at places where confirmation
-    is required, it asks for the user confirmation to continue. Only if
-    you click on **Continue**, it will proceed.
+> ![](./media/image32.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image33.png)
+3.  작업이 진행되는 동안 GitHub Copilot은 먼저 **실행 계획을** 새우고
+    적절한 **파일**에 **변경**을 시작합니다. 각 **행동**은 **채팅**창에
+    설명되어 있습니다. **파일**에 **변경**이 있을 때 세부 정보가
+    채워지고 사용자 변경 사항을 **유지**하거나 **페기**할지 확인을
+    요청합니다. 또한, 획인이 필요한 곳에서는 계속을 위해 사용자 확인을
+    요청합니다. **Continue**를 클릭해야만 진행됩니다.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image34.png)
+![](./media/image33.png)
 
-4.  Select the file name that gets listed in the chat, to open it. The
-    file has got green color code for addition and red for deletion.
+![](./media/image34.png)
 
-5.  Ensure to go through the changes, understand and then continue to
-    **keep** the file to have the changes.
+4.  채팅에 나오는 파일 이름을 선택해서 여세요. 파일은 추가를 위한 녹색
+    색상 코드, 삭제를 위한 빨간색 코드가 있습니다.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image35.png)
+5.  변경 사항을 꼼꼼히 검토하고 이해한 후, 파일을 계속 보관해 변경
+    사항을 **유지**하세요.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image36.png)
+![](./media/image35.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image37.png)
+![](./media/image36.png)
 
-6.  In the below screenshot, you can see that the Aws configuration are
-    removed and the Azure Storage blob is added.
+![](./media/image37.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image38.png)
+6.  아래 스크린샷에서 Aws 설정이 제거되고 Azure Storage 블롭이 추가된
+    것을 볼 수 있습니다.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image39.png)
+![](./media/image38.png)
 
-7.  Review each file and click **Keep**. Then select **Continue** if
-    prompted.
+![](./media/image39.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image40.png)
+7.  각 파일을 검토하고 **Keep**을 클릭하세요. 프롬프트되면
+    **Continue**를 선택하세요.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image41.png)
+![](./media/image40.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image42.png)
+![](./media/image41.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image43.png)
+![](./media/image42.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image44.png)
+![](./media/image43.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image45.png)
+![](./media/image44.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image46.png)
+![](./media/image45.png)
 
-8.  The **Todos** section shows the progress on the created plan and the
-    status on how many are finished and how many are completed.
+![](./media/image46.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image47.png)
+8.  **Todos** 섹션은 작성된 계획의 진행 상황과 몇 개가 완료되었는지, 몇
+    개가 완료되었는지에 대한 상태를 보여줍니다.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image48.png)
+![](./media/image47.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image49.png)
+![](./media/image48.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image50.png)
+![](./media/image49.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image51.png)
+![](./media/image50.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image52.png)
+![](./media/image51.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image53.png)
+![](./media/image52.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image54.png)
+![](./media/image53.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image55.png)
+![](./media/image54.png)
 
-9.  The first task is complete and it shows a **Migration compete**
-    message.
+![](./media/image55.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image56.png)
+9.  첫 번째 작업이 완료되었고 **Migration compete** 메시지가 표시됩니다.
 
-10. Also , the Summary file is saved in the project.
+![](./media/image56.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image57.png)
+10. 또한, 요약 파일은 프로젝트에 저장됩니다.
 
-## Task 5: Migrate from AWS S3 to Azure Blob Storage
+![](./media/image57.png)
 
-Next, you will start the migration process of AWS S3 to Azure Blob
-Storage.
+## 작업 5: AWS S3에서 Azure Blob Storage로 마이그레이션하기
 
-1.  Select Run Task against the issue **Storage Migration (AWS S3).**
+다음으로 AWS S3를 Azure Blob Storage로 마이그레이션하는 과정을 시작하게
+됩니다.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image58.png)
+1.  **Storage Migration (AWS S3)** 이슈에 대한 Run Task를 선택하세요.
 
-2.  GitHub Copilot runs \#appmod-run-task by kbId:
-    s3-to-azure-blob-storage.
+![](./media/image58.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image59.png)
+2.  GitHub Copilot은 \#appmod-run-task by kbId:
+    s3-to-azure-blob-storage를 실행합니다.
 
-3.  GHCP will continue to run appmod-run-task,
-    appmod-fetch-knowledgebase,appmod-search-file and other tasks using
-    the MCP Server. During each step, please manually click **Continue**
-    repeatedly to allow, confirm and proceed if prompted. The Copilot
-    Agent uses various tools to facilitate application modernization.
-    Each tool's usage might require confirmation by clicking the
-    Continue button.
+![](./media/image59.png)
 
-4.  Review the proposed code changes and click Keep to apply them.
+3.  GHCP는 MCP Server를 사용하여 run appmod-run-task,
+    appmod-fetch-knowledgebase,appmod-search-file 등 다양한 작업을 계속
+    실행할 것입니다. 각 단계에서 수동으로 **Continue**를 클릭하여 허용,
+    확인, 진행 요청 시 진행하세요. Copilot Agent는 애플리케이션 현대화를
+    촉진하기 위해 다양한 도구를 사용합니다. 각 도구 사용 여부는 Continue
+    버튼을 클릭하여 확인해야 할 수도 있습니다.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image60.png)
+4.  제안된 코드 변경사항을 검토한 후 Keep를 클릭하고 적용하세요.
 
-5.  Once this is completed, you can move to the next task.
+![](./media/image60.png)
 
-## Task 6: Migrate from AMQP RabbitMQ to Azure Service Bus
+5.  이 작업이 완료되면 다음 작업으로 넘어갈 수 있습니다.
 
-The Application asset-manager uses Spring AMQP with RabbitMQ for message queuing. Let's move to Azure Service Bus instead.
+## 작업6: AMQP RabbitMQ에서 Azure Service Bus로 마이그레이션하기
 
-1.  For this part of the workshop, we will take a look at
-    the **Messaging Service Migration**. We will **Migrate from AMQP
-    RabbitMQ to Azure Service Bus**.
+> 애플리케이션 asset-manager는 메시지 큐잉을 위해 Spring AMQP와
+> RabbitMQ를 사용합니다. 대신 Azure Service Bus로 넘어가겠습니다.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image61.png)
+1.  이번 워크숍에서는 **Messaging Service Migration**에 대해
+    살펴보겠습니다. **Migrate from AMQP RabbitMQ to Azure Service
+    Bus**를 할 것입니다.
 
-6.  Click **Run Task**.
+![](./media/image61.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image62.png)
+6.  **Run Task**를 클릭하세요.
 
-7.  GitHub Copilot runs #appmod-run-task by kbId:
-    amqp-rabbitmq-servicebus
+![](./media/image62.png)
 
-8.  GHCP will continue to
-    run appmod-run-task, appmod-fetch-knowledgebase,appmod-search-file and
-    other tasks using the MCP Server. During each step, please manually
-    click **Continue** repeatedly to allow, confirm and proceed. The
-    Copilot Agent uses various tools to facilitate application
-    modernization. Each tool's usage requires confirmation by clicking
-    the Continue button.
+7.  GitHub Copilot는 #appmod-run-task by kbId:
+    amqp-rabbitmq-servicebus를 실행합니다.
 
-9.  Review the proposed code changes and click **Keep** to apply them.
+8.  GHCP는 MCP Server를 사용하여
+    appmod-run-task, appmod-fetch-knowledgebase,appmod-search-file 등
+    다양한 작업을 계속 실행할 것입니다. 각 단계에서 수동으로
+    **Continue**를 반복해서 클릭하여 허용, 확인 및 진행하세요. The
+    Copilot Agent는 애플리케이션 현대화를 촉진하기 위해 다양한 도구를
+    사용합니다. 각 도구 사용 여부는 Continue 버튼을 클릭하여 획인해야
+    합니다.
 
-Once these are completed, you should be able to see all the updates in
-your code.
+9.  제안된 코드 변경사항을 검토한 후 **Keep**를 눌러 적용할 수 있습니다.
 
-The complete migrated code ready to be deployed to Azure is available
-here - **C:\Labfiles\java-migration-copilot-samples-expected**. Go
-through the code and as against the original code, you can see that all
-the references to AWS S3, RabbitMQ and PostgreSQL database are clearly
-removed and replaced with Azure Blob Storage, Azure Service Bus and
-Azure Database for PostgreSQL correspondingly.
+이 작업이 완료되면 코드의 모든 업데이트를 확인할 수 있습니다.
 
-## Summary
+Azure에 배포할 준비가 된 완전한 마이그레이션 코드는 여기에서 확인할 수
+있습니다 - **C:\Labfiles\\ java-migration-copilot-samples-expected**.
+코드를 살펴보면 원본 코드와 달리 AWS S3, RabbitMQ, PostgreSQL
+데이터베이스에 대한 모든 참조가 명확히 제거되고 Azure Blob Storage,
+Azure Service Bus, PostgreSQL용 Azure Database로 대체된 것을 알 수
+있습니다.
 
-- You ran an automated assessment and applied Copilot-generated
-  migrations for database, storage, and messaging.
+## 요약
 
-- You reviewed and accepted the generated code changes and migration
-  summary.
+- 자동 평가를 실행하고 Copilot이 생성한 마이그레이션을 데이터베이스,
+  저장소, 매시장에 적용했습니다.
+
+- 생성된 코드 변경 사항과 마이그레이션 요약을 검토하고 수락했스니다.
