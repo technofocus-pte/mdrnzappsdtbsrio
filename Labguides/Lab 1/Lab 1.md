@@ -68,14 +68,14 @@ AppMod라고도 함)은 Visual Studio Code Extension 및 GitHub Copilot을
 
 1.  VS Code를 여세요. 왼쪽 창에서 **Extensions**를 선택하세요.
 
-![](./media/image3.png)
+    ![](./media/image3.png)
 
 2.  +++GitHub Copilot app modernization+++를 검색하고 선택하고
     **Install**을 선택하세요.
 
-![](./media/image4.png)
-
-![](./media/image5.png)
+    ![](./media/image4.png)
+    
+    ![](./media/image5.png)
 
 GitHub Copilot App Modernization 확장 기능은 앱을 쉽게 현대화하는 데
 도움이 됩니다.
@@ -86,129 +86,127 @@ GitHub Copilot App Modernization 확장 기능은 앱을 쉽게 현대화하는 
 
 ## 작업 3: Java 애플리케이션을 평가하기
 
-1.  **C:** **extract**에서 **Labfiles zip** 파일을 선택하세요.
+1.  VSCode를 열고 **Select Folder**를 클릭하세요.
 
-2.  VSCode를 열고 **Select Folder**를 클릭하세요.
+    ![](./media/image6.png)
 
-![](./media/image6.png)
-
-3.  **C:\Labfile**에서 **GitHub-Copilot-App-Modernization-for-java**
+2.  **C:\Labfile**에서 **GitHub-Copilot-App-Modernization-for-java**
     폴더를 선택하고 **Select folder**를 클릭하세요.
 
-![](./media/image7.png)
+    ![](./media/image7.png)
 
-4.  폴더가 열려면 **Yes, I trust the authors** 옵션을 선택하세요.
+3.  폴더가 열려면 **Yes, I trust the authors** 옵션을 선택하세요.
 
-![](./media/image8.png)
+    ![](./media/image8.png)
 
-5.  VSCode 오른쪽 하단에 GitHub Copilot 아이콘을 볼 수 있습니다.
+4.  VSCode 오른쪽 하단에 GitHub Copilot 아이콘을 볼 수 있습니다.
 
-![](./media/image9.png)
+    ![](./media/image9.png)
 
-6.  **Continue with GitHub** 옵션을 선택하세요.
+5.  **Continue with GitHub** 옵션을 선택하세요.
 
-![](./media/image10.png)
+    ![](./media/image10.png)
 
-7.  **GitHub id** 및 **Authorize Visual Studio Code**를 사용하여
+6.  **GitHub id** 및 **Authorize Visual Studio Code**를 사용하여
     로그인하세요.
 
-8.  이제 GitHub Copilot이 활성화된 것을 볼 수 있습니다.
+7.  이제 GitHub Copilot이 활성화된 것을 볼 수 있습니다.
 
-![](./media/image11.png)
+    ![](./media/image11.png)
 
-9.  왼쪽 창에서 **extension** – **GitHub Copilot for App
+8.  왼쪽 창에서 **extension** – **GitHub Copilot for App
     Modernization**을 선택하세요.
 
-![](./media/image12.png)
+    ![](./media/image12.png)
 
-10. GitHub 채팅에서 Auto 옆 드롭다운을 선택해서 모델을 선택하세요.
+9. GitHub 채팅에서 Auto 옆 드롭다운을 선택해서 모델을 선택하세요.
     **Claude Sonnet 4.5**는 앱 현대화에 가장 적합합니다. 프리미멈 GitHub
     라이선스가 있다면 선택할 수 있고 그렇지 않으면 **Claude Haiku
     4.5**를 선택할 수 있습니다.
 
-![](./media/image13.png)
+    ![](./media/image13.png)
 
-11. GitHub Copilot App Modernization의 Quick Start 섹션에서 **Start
+10. GitHub Copilot App Modernization의 Quick Start 섹션에서 **Start
     Assessment**를 선택하세요.
 
-![](./media/image14.png)
+    ![](./media/image14.png)
 
-12. 평가 진행 상황을 확인하세요.
+11. 평가 진행 상황을 확인하세요.
 
-![](./media/image15.png)
+    ![](./media/image15.png)
 
-13. 평가가 시작되어 점진적으로 진행되는 것을 볼 수 있습니다.
+12. 평가가 시작되어 점진적으로 진행되는 것을 볼 수 있습니다.
 
-![](./media/image16.png)
+    ![](./media/image16.png)
 
-![](./media/image17.png)
+    ![](./media/image17.png)
 
-14. 이 과정은 약 5분 정도 걸립니다. 완료되면 **Assessment Report**는
+13. 이 과정은 약 5분 정도 걸립니다. 완료되면 **Assessment Report**는
     아래 스크린샷과 같이 표시됩니다.
 
-**Application Information** 섹션에는 신청서에 대한 기본 정보가 나열되어
-있습니다.
+    **Application Information** 섹션에는 신청서에 대한 기본 정보가 나열되어
+    있습니다.
+    
+    ![](./media/image18.png)
 
-![](./media/image18.png)
-
-15. **Issue Summary** 섹션은 이슈를 두 가지 범주로 나눕니다 **– Cloud
+14. **Issue Summary** 섹션은 이슈를 두 가지 범주로 나눕니다 **– Cloud
     Readiness** 및 **Java Upgrade**.
 
-![](./media/image19.png)
+    ![](./media/image19.png)
 
-16. 이슈에 대한 자세한 내용을 보려면 아래로 스크롤하세요. 이 경우
+15. 이슈에 대한 자세한 내용을 보려면 아래로 스크롤하세요. 이 경우
     **Cloud Readiness category**에는 **9 issues**가 없고 Java Upgrade
     카테고리에는 없는 문제가 있습니다.
 
-![](./media/image20.png)
+    ![](./media/image20.png)
 
-17. 각 섹션을 확장해 문제가 무엇인지, 그리고 어떻게 핼결할 수 있는지
+16. 각 섹션을 확장해 문제가 무엇인지, 그리고 어떻게 핼결할 수 있는지
     살펴보세요.
 
-18. 첫 번째 문제는 **Database Migration (PostgreSQL)**에 관한 것이며
+17. 첫 번째 문제는 **Database Migration (PostgreSQL)**에 관한 것이며
     **Solution**은 **Azure Database for PostgreSQL**로 마이그레이션하는
     것입니다
 
-![](./media/image21.png)
+    ![](./media/image21.png)
 
-19. PostgreSQL 데이터베이스 찾기 옵션을 더 확인하면 영향받는 파일 수와
+18. PostgreSQL 데이터베이스 찾기 옵션을 더 확인하면 영향받는 파일 수와
     자세한 설명을 확인할 수 잇습니다.
 
-![](./media/image22.png)
+    ![](./media/image22.png)
 
-20. 다음은 Messaging Service Migration (Spring AMQP Rabbit MQ)입니다
+19. 다음은 Messaging Service Migration (Spring AMQP Rabbit MQ)입니다
 
-![](./media/image23.png)
+    ![](./media/image23.png)
 
-21. 세부 사항을 이해하려면 **Spring RabbitMQ usage found in code**를
+20. 세부 사항을 이해하려면 **Spring RabbitMQ usage found in code**를
     확장하세요.
 
-![](./media/image24.png)
+    ![](./media/image24.png)
 
-22. 영향을 받는 파일과 세부 정보를 확인하려면 **Spring AMQP dependency**
+21. 영향을 받는 파일과 세부 정보를 확인하려면 **Spring AMQP dependency**
     파일을 확장하세요.
 
-![](./media/image25.png)
+    ![](./media/image25.png)
 
-23. **RabbitMQ connection string, username or password found in
+22. **RabbitMQ connection string, username or password found in
     configuration file**을 확장하세요
 
-![](./media/image26.png)
+    ![](./media/image26.png)
 
-24. 다음 문제는 **Storage Migration (AWS S3)**으로 솔루션은 **Migrate
+23. 다음 문제는 **Storage Migration (AWS S3)**으로 솔루션은 **Migrate
     from AWS S3 to Azure Blob Storage**입니다.
 
-![](./media/image27.png)
+    ![](./media/image27.png)
 
-25. 세부 사항을 보려면 **AWS S3 usage found**를 확장하세요.
+24. 세부 사항을 보려면 **AWS S3 usage found**를 확장하세요.
 
-![](./media/image28.png)
+    ![](./media/image28.png)
+    
+    ![](./media/image29.png)
 
-![](./media/image29.png)
+25. 세부 사항을 보려면 **AWS S3 dependency usage found**를 획장하세요.
 
-26. 세부 사항을 보려면 **AWS S3 dependency usage found**를 획장하세요.
-
-![](./media/image30.png)
+    ![](./media/image30.png)
 
 ## 작업 4: Azure Database for PostgreSQL Flexible Server로 마이그레이션하기
 
@@ -368,3 +366,4 @@ Azure Service Bus, PostgreSQL용 Azure Database로 대체된 것을 알 수
   저장소, 매시장에 적용했습니다.
 
 - 생성된 코드 변경 사항과 마이그레이션 요약을 검토하고 수락했스니다.
+
