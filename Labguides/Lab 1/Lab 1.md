@@ -80,11 +80,7 @@ AppMod라고도 함)은 Visual Studio Code Extension 및 GitHub Copilot을
 GitHub Copilot App Modernization 확장 기능은 앱을 쉽게 현대화하는 데
 도움이 됩니다.
 
-## 작업 2: 기존 애플리케이션을 이해하기
-
-기존 코드를 살펴보면서 PostgreSQL, AWS 및 RabbitMQ의 구성을 이해하세요.
-
-## 작업 3: Java 애플리케이션을 평가하기
+## 작업 2: Java 애플리케이션을 평가하기
 
 1.  VSCode를 열고 **Select Folder**를 클릭하세요.
 
@@ -98,6 +94,8 @@ GitHub Copilot App Modernization 확장 기능은 앱을 쉽게 현대화하는 
 3.  폴더가 열려면 **Yes, I trust the authors** 옵션을 선택하세요.
 
     ![](./media/image8.png)
+
+4.  기존 코드를 살펴보면서 PostgreSQL, AWS 및 RabbitMQ의 구성을 이해하세요.
 
 4.  VSCode 오른쪽 하단에 GitHub Copilot 아이콘을 볼 수 있습니다.
 
@@ -208,7 +206,7 @@ GitHub Copilot App Modernization 확장 기능은 앱을 쉽게 현대화하는 
 
     ![](./media/image30.png)
 
-## 작업 4: Azure Database for PostgreSQL Flexible Server로 마이그레이션하기
+## 작업 3: Azure Database for PostgreSQL Flexible Server로 마이그레이션하기
 
 1.  **Database Migration**부터 시작합니다. Assessment Report의 Issues
     -\> Issue Category에 나열된 Database Migration(PostgreSQL) 이슈에
