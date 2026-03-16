@@ -1,22 +1,15 @@
 # Lab 1 - GitHub Copilot App Modernization for Java - Migrate to Azure
 
-A lab that walks through assessing and migrating the sample Java
-application "asset-manager" from AWS/RabbitMQ/Postgres to Azure Blob
+This lab walks through assessing and migrating the sample Java
+application **asset-manager** from AWS/RabbitMQ/Postgres to Azure Blob
 Storage, Azure Service Bus, and Azure Database for PostgreSQL using
-GitHub Copilot App Modernization for Java.
+**GitHub Copilot App Modernization for Java**.
 
 **Overview**
 
-This hands-on lab demonstrates assessing and migrating a Java web +
-worker application to Azure using GitHub Copilot App Modernization for
-Java. The lab is organized as small focused tasks with verification
-points after each major step.
+This hands-on lab demonstrates **assessing** and **migrating** a **Java web + worker application** to **Azure** using **GitHub Copilot App Modernization for Java**. 
 
-GitHub Copilot App Modernization for Java, also referred to as App
-Modernization for Java or AppMod, assists with app assessment, planning
-and code remediation using a Visual Studio Code Extension and GitHub
-Copilot. It automates repetitive tasks, boosting developer confidence
-and speeding up the Azure migration and ongoing optimization.
+**GitHub Copilot App Modernization for Java**, also referred to as App Modernization for Java or AppMod, assists with app assessment, planning and code remediation using a Visual Studio Code Extension and GitHub Copilot. It automates repetitive tasks, boosting developer confidence and speeding up the Azure migration and ongoing optimization.
 
 **About the Project**
 
@@ -28,12 +21,12 @@ queue.
 
 The project uses the following original infrastructure:
 
-- AWS S3 for image storage, using password-based authentication (access
+- **AWS S3 for image storage**, using password-based authentication (access
   key/secret key)
 
-- RabbitMQ for message queuing, using password-based authentication
+- **RabbitMQ for message queuing**, using password-based authentication
 
-- PostgreSQL database for metadata storage, using password-based
+- **PostgreSQL database** for metadata storage, using password-based
   authentication
 
 **Original Architecture**
@@ -44,13 +37,13 @@ The project uses the following original infrastructure:
 
 After migration, the project will use the following Azure services
 
-- Azure Blob Storage for image storage, using managed identity
+- **Azure Blob Storage** for image storage, using managed identity
   authentication
 
-- Azure Service Bus for message queuing, using managed identity
+- **Azure Service Bus for message queuing**, using managed identity
   authentication
 
-- Azure Database for PostgreSQL for metadata storage, using managed
+- **Azure Database for PostgreSQL** for metadata storage, using managed
   identity authentication
 
 **Migrated Architecture**
@@ -61,48 +54,42 @@ Managed identity based authentication
 
 ## Prerequisites
 
-In order to execute this lab, you will need a Github account with Github
-Copilot enabled. If you do not have one, please create one form here -
-+++https://github.com/signup+++
+In order to execute this lab, you will need a **Github account** with **Github Copilot** enabled. If you do not have one, please create one form here -+++https://github.com/signup+++
 
 ## Task 1: Install the GitHub Copilot App Modernization extension
 
-In this task, you will install the extension in the VS Code that is
-required for this lab execution.
+In this task, you will install the extension in the VS Code that is required for this lab execution.
 
 1.  Open the VS Code. Select **Extensions** from the left pane.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image3.png)
 
-2.  Search for and select +++GitHub Copilot app modernization+++ and
-    then select **Install**.
+2.  Search for and select +++GitHub Copilot app modernization+++ and then select **Install**.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image4.png)
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image5.png)
 
-The GitHub Copilot App Modernization extension is what will help in
-modernizing the apps easily.
+The GitHub Copilot App Modernization extension is what will help in modernizing the apps easily.
 
-## Task 2: Understand the existing application
+## Task 2: Assess Your Java Application
 
-Go through the existing code to understand the configuration of
-PostgreSQL, AWS and RabbitMQ.
+In this task, you will use **GitHub Copilot for App Modernization** in Visual Studio Code to analyze an existing Java application and evaluate its readiness for modernization and cloud migration.
 
-## Task 3: Assess Your Java Application
-
-2.  Open VSCode and click on **Select Folder**.
+1.  Open VSCode and click on **Select Folder**.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image6.png)
 
-3.  Select **GitHub-Copilot-App-Modernization-for-java** folder from
+2.  Select **GitHub-Copilot-App-Modernization-for-java** folder from
     **C:\Labfile** and click on **Select folder**.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image7.png)
 
-4.  Once the folder opens, select **Yes, I trust the authors** option.
+3.  Once the folder opens, select **Yes, I trust the authors** option.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image8.png)
+
+4.  Go through the existing code to understand the configuration of PostgreSQL, AWS and RabbitMQ.
 
 5.  At the right bottom of VSCode, you can see the GitHub Copilot icon.
 
@@ -212,11 +199,13 @@ about the application.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image30.png)
 
-## Task 4: Migrate to Azure Database for PostgreSQL Flexible Server
+## Task 3: Migrate to Azure Database for PostgreSQL Flexible Server
+
+In this task, you will use **GitHub Copilot for App Modernization** to migrate the application’s database configuration from **PostgreSQL** to **Azure Database for PostgreSQL** – Flexible Server.
 
 1.  We will start with the **Database Migration**. Select **Run Task**
     against the Database Migration(PostgreSQL) issue that is listed
-    under Issues -\> Issue Category in the Assessment Report.
+    under **Issues** -> **Issue Category** in the Assessment Report.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image31.png)
 
@@ -304,10 +293,9 @@ about the application.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image57.png)
 
-## Task 5: Migrate from AWS S3 to Azure Blob Storage
+## Task 4: Migrate from AWS S3 to Azure Blob Storage
 
-Next, you will start the migration process of AWS S3 to Azure Blob
-Storage.
+Next, you will start the migration process of AWS S3 to Azure Blob Storage.
 
 1.  Select Run Task against the issue **Storage Migration (AWS S3).**
 
@@ -332,7 +320,7 @@ Storage.
 
 5.  Once this is completed, you can move to the next task.
 
-## Task 6: Migrate from AMQP RabbitMQ to Azure Service Bus
+## Task 5: Migrate from AMQP RabbitMQ to Azure Service Bus
 
 The Application asset-manager uses Spring AMQP with RabbitMQ for message queuing. Let's move to Azure Service Bus instead.
 
