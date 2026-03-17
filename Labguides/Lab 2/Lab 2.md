@@ -200,10 +200,6 @@ application.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image26.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image27.png)
-
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image28.png)
-
 ## Task 3: Create and configure the Microsoft Foundry resource
 
 In this exercise, you will create the Microsoft Foundry resource and
@@ -304,7 +300,7 @@ Foundry resource.
 In this task, you will configure your sample application with the
 connection variables.
 
-1.  From VS Code, open *appsettings.json*. Using the values you copied
+1.  From VS Code, open **appsettings.json**. Using the values you copied
     earlier from the Foundry portal, configure the following variables.
 
     - AzureOpenAIEndpoint - Azure OpenAI endpoint (copied from the classic
@@ -334,22 +330,13 @@ connection variables.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image51.png)
 
-6.  Enter Hi or any message like +++What are my current tasks+++ and get
+6.  Enter +++Hi+++ or any message like +++What are my current tasks+++ and get
     the response from the agent.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image52.png)
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image53.png)
 
-7.  Now, execute +++azd up+++ to deploy the app changes.
-
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image54.png)
-
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image55.png)
-
-8.  Open the endpoint to view the app in the Azure.
-
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image56.png)
 
 ## Summary
 
