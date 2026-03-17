@@ -17,25 +17,25 @@ with an agent in an App Service app.
 
 In this exercise, you will execute the application in the local system.
 
-2.  Open VS Code. Select **Open Folder**.
+1.  Open VS Code. Select **Open Folder**.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image1.png)
 
-3.  Select **app-service-agentic-semantic-kernel-ai-foundry-agent-main**
+2.  Select **app-service-agentic-semantic-kernel-ai-foundry-agent-main**
     folder from **C:/Labfiles**.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image2.png)
 
-4.  Select **Yes, I trust the authors** in the pop up.
+3.  Select **Yes, I trust the authors** in the pop up.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image3.png)
 
-5.  Select the 3 dots in the top menu. Select **Terminal** -\> **New
+4.  Select the 3 dots in the top menu. Select **Terminal** -\> **New
     Terminal** to open the VSCode terminal and execute the app.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image4.png)
 
-6.  Once opened, execute the below command in the terminal to install
+5.  Once opened, execute the below command in the terminal to install
     the NuGet package Microsoft.Agents.AI of the specified version into
     the current project.
 
@@ -43,26 +43,26 @@ In this exercise, you will execute the application in the local system.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image5.png)
 
-7.  Next, execute the command +++dotnet build+++ to build the project.
+6.  Next, execute the command +++dotnet build+++ to build the project.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image6.png)
 
-8.  Next, execute the command +++dotnet run+++ to execute the project.
+7.  Next, execute the command +++dotnet run+++ to execute the project.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image7.png)
 
-9.  Once the command gets executed, open a browser and open
+8.  Once the command gets executed, open a browser and open
     +++http://localhost:5280+++
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image8.png)
 
-10. Select the Microsoft Agent Framework option from the left and you
+9. Select the Microsoft Agent Framework option from the left and you
     can see that you get a message that it is not configured. We will
     update it later in this lab.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image9.png)
 
-11. Press Ctrl+C in the VS Code terminal in order to stop the
+10. Press Ctrl+C in the VS Code terminal in order to stop the
     application.
 
 ## Review the agent code
