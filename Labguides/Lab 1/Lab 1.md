@@ -193,7 +193,7 @@ GitHub Copilot App Modernization 확장 기능은 앱을 쉽게 현대화하는 
 
     ![](./media/image26.png)
 
-23. 다음 문제는 **Storage Migration (AWS S3)**으로 솔루션은 **Migrate
+23. 다음 문제는 **Storage Migration (AWS S3)** 으로 솔루션은 **Migrate
     from AWS S3 to Azure Blob Storage**입니다.
 
     ![](./media/image27.png)
