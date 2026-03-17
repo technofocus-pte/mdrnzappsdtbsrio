@@ -140,10 +140,11 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image14.png)
 
-1. In the Github codespace, open the **infra** folder on the left hand side and select the **main.bicep** file. Verify line 8 uses the correct unique suffix for naming resources by using **tags.LabInstance**.
+1. In the Github codespace, open the **infra** folder on the left hand side and select the **main.bicep** file. Verify line 8 uses the correct unique suffix for naming resources by using **tags.LabInstance**. If you notice line 8 still reads as: param resourceToken string = **uniqueString(resourceGroup().id, environmentName)**,
+please change **uniqueString(resourceGroup().id, environmentName)** to +++resourceGroup().tags.LabInstance+++ and select **ctrl+s** to save the change.
 
-   >[!Alert] If you notice line 8 still reads as: param resourceToken string = **uniqueString(resourceGroup().id, environmentName)**,
-   >please change **uniqueString(resourceGroup().id, environmentName)** to +++resourceGroup().tags.LabInstance+++ and select **ctrl+s** to save the change.
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image60.png)
 
 4.  In the terminal, execute the following two commands to provision the
     Azure resources with the AZD template:
@@ -160,10 +161,6 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
 6.  When prompted, enter the following details:
 
     - **Select Azure Subscription to use:** @lab.CloudSubscription.Name
-
-    - **Pick a resource group to use:** @lab.CloudResourceGroup(ResourceGroup1).Name
-  
-    	>[!Note] Since we set the resource group as a variable prior to this step, the prompt to select **@lab.CloudResourceGroup(ResourceGroup2).Name** may not be necessary.
 
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image16.png)
