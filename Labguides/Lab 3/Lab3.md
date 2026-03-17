@@ -230,7 +230,7 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image25.png)
 
-7.  Navigate back to the ResourceGroup1 and select the **Search
+7.  Navigate back to the ResourceGroup2 and select the **Search
     service**.
 
     ![A screenshot of a computer AI-generated content may be
@@ -310,19 +310,11 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
     ![A screenshot of a computer AI-generated content may be
     incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image39.png)
 
-<!--
-20. Navigate to Codespace terminal and run the following command:
-
-	+++azd down+++
-	
-	When asked, type **y** and select **enter**. 
--->
-
 21. Navigate to Codespace terminal and set the search index name as an AZD environment variable:
 
-    +++azd env set SEARCH_INDEX_NAME <your-search-index-name>+++
+    +++azd env set SEARCH_INDEX_NAME < your-search-index-name >+++
 
-    >[!Note] Replace <your-search-index-name> with the index name you
+    >[!Note] Replace < your-search-index-name > with the index name you
 copied previously. AZD uses this variable in subsequent deployments to
 set the App Service app setting.
 
