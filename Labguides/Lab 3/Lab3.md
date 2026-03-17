@@ -68,35 +68,32 @@ Azure AI Search, with Storage as the data source](./media/image2.png)
 가장 쉬운 시작 방법은 GitHub Codespaces를 사용하는 것으로, 필요한 모든
 사전 설치 도구가 포함된 완전한 개발 환경을 제공합니다.
 
-1.  **C:** **extract**에서 **Labfiles zip** 파일을 선택하세요.
-
-2.  GitHub 저장소
-    +++<https://github.com/technofocus-pte/appserviceragopenai+++>로
+1.  GitHub 저장소
+    +++https://github.com/technofocus-pte/appserviceragopenai+++로
     이동하고 GithHub 자격 증명으로 로그인하세요.
 
-3.  repo를 포그하려면 **Fork**를 클릭하세요.
+2.  repo를 포그하려면 **Fork**를 클릭하세요.
 
-![](./media/image3.png)
+    ![](./media/image3.png)
 
-4.  **Create fork**를 클릭하세요.
+3.  **Create fork**를 클릭하세요.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image4.png)
 
-5.  포크되면 새 코드스페이스를 열려면
-    **Code** \> **Codespaces** \> **Create codespace on main**을
+4.  포크되면 새 코드스페이스를 열려면
+    **Code** > **Codespaces** > **Create codespace on main**을
     클릭하세요.
 
-![](./media/image5.png)
+    ![](./media/image5.png)
 
-6.  코드스페이스 환경이 설정될 때까지 기다리세요. 완전히 설치하는 데 몇
+5.  코드스페이스 환경이 설정될 때까지 기다리세요. 완전히 설치하는 데 몇
     분이 걸립니다.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image6.png)
 
-> ![A screenshot of a computer AI-generated content may be
-> incorrect.](./media/image7.png)
+    ![A screenshot of a computer AI-generated content may be incorrect.](./media/image7.png)
 
 ## 작업 2: 주어진 아키텍처를 배포하기
 
@@ -104,14 +101,14 @@ incorrect.](./media/image6.png)
 
 1.  터미널에서 Azure Developer CLI를 사용하여 Azure로 로그인하세요:
 
-+++azd auth login+++
+    +++azd auth login+++
 
-![](./media/image8.png)
+    ![](./media/image8.png)
 
 2.  코드를 복사한 후 **Enter** 키를 누르면, 새 브라우저 창이 열리며 해당
     코드를 입력하고 **Next **버튼을 클릭하세요.
 
-![A screenshot of a computer error AI-generated content may be
+    ![A screenshot of a computer error AI-generated content may be
 incorrect.](./media/image9.png)
 
 3.  다음 자격 증명으로 **Azure account**에 로그인한 후 **Continue**
@@ -121,44 +118,47 @@ incorrect.](./media/image9.png)
 
     - TAP 토큰: <+++@lab.CloudPortalCredential>(User1).AccessToken+++
 
-> ![A screenshot of a computer AI-generated content may be
-> incorrect.](./media/image10.png)
+    ![A screenshot of a computer AI-generated content may be incorrect.](./media/image10.png)
 
-![A screenshot of a login box AI-generated content may be
+    ![A screenshot of a login box AI-generated content may be
 incorrect.](./media/image11.png)
 
-![A screenshot of a computer error AI-generated content may be
+    ![A screenshot of a computer error AI-generated content may be
 incorrect.](./media/image12.png)
 
-이제 귀하의 계정이 Codespace 단말기와 성공적으로 연결되었습니다.
+    이제 귀하의 계정이 Codespace 단말기와 성공적으로 연결되었습니다.
 
-![A close-up of a computer AI-generated content may be
+    ![A close-up of a computer AI-generated content may be
 incorrect.](./media/image13.png)
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image14.png)
+
+4.  Github codespace에서 왼쪽에 있는 인프라 폴더를 열고 main.bicep 파일을 선택합니다. tags.LabInstance를 사용하여 8행에서 리소스 명명에 올바른 고유 접미사를 사용하는지 확인합니다. 8행이 여전히 param resourceToken string = uniqueString(resourceGroup().id, environmentName)으로 표시된다면, uniqueString(resourceGroup().id, environmentName)을 resourceGroup().tags.LabInstance로 변경한 후 Ctrl+S를 눌러 변경 사항을 저장해 주세요.
+
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image60.png)
 
 4.  터미널에서 다음 명령을 실행하여 AZD 템플릿으로 Azure 리소스를
     프로비저딩하세요:
 
-+++azd provision+++
+    +++azd env set AZURE_RESOURCE_GROUP @lab.CloudResourceGroup(ResourceGroup2).Name+++
 
-![A screenshot of a computer AI-generated content may be
+    +++azd provision+++
+
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image15.png)
 
-5.  질문이 나오면 다음 정보를 입력하세요:
+6.  질문이 나오면 다음 정보를 입력하세요:
 
-    - **Enter a new environment
-      Name:** <+++blazorenv@lab.LabInstance.Id>+++
+    - **Enter a new environment Name:** +++blazorenv@lab.LabInstance.Id+++
 
-    - **Select Azure Subscription to use:** 구독을 선택하세요
+    - **Select Azure Subscription to use:** @lab.CloudSubscription.Name
 
-    - **Pick a resource group to use:** **ResourceGroup1**을 선택하세요
-
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image16.png)
 
-6.  배치가 완료될 때까지 기다리세요. 5분에서 10분 정도 걸립니다. 이
+7.  배치가 완료될 때까지 기다리세요. 5분에서 10분 정도 걸립니다. 이
     과정은:
 
     - 필요한 모든 Azure 리소스를 생성하기
@@ -170,9 +170,9 @@ incorrect.](./media/image16.png)
 
     - 서비스 간 안전한 접근을 위해 필요하느 역할 할당을 설정하기
 
-성공적으로 배포한 후 배포된 애플리케이션의 URL을 볼 수 있습니다.
+    성공적으로 배포한 후 배포된 애플리케이션의 URL을 볼 수 있습니다.
 
-![](./media/image17.png)
+    ![](./media/image17.png)
 
 ## 작업 3: 문서를 업로드하고 검색 인덱스를 생성하기
 
@@ -182,76 +182,76 @@ incorrect.](./media/image16.png)
 1.  **Ctrl+Click**로 주어진 URL을 열면 생성된 모든 리소스를 볼 수
     있습니다.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image18.png)
 
 2.  배포에 생성된 **storage account**를 선택하세요.
 
-![](./media/image19.png)
+    ![](./media/image19.png)
 
 3.  왼쪽 탐색 메뉴의 **Data Storage**에서 **Containers**를 선택하고
     **documents** 컨테이너를 여세요. 문서 컨테이너는 비어 있습니다. 이제
     문서를 업로드할 것입니다.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image20.png)
 
 4.  **Upload** 버튼을 클릭하세ㅔ요.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image21.png)
 
 5.  **Browse for files**을 클릭하고
-    **C:\LabFiles\Build-a-RAG-application-using-Azure-OpenAI-and-Azure-AI-Search-and-deploy-to-Azure-App-Service**로
+    **C:\LabFiles\RAG**로
     이동하고 5 가지 문서 모두 선택하고 **Open** 버튼을 클릭하세요.
 
-![A screenshot of a computer AI-generated content may be
-incorrect.](./media/image22.png)
-
-![A screenshot of a computer AI-generated content may be
-incorrect.](./media/image23.png)
+    ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image22.png)
+    
+    ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image23.png)
 
 6.  **Upload**를 클릭하세요.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image24.png)
 
-이 파일들은 문서 컨테이너에서 확인할 수 있습니다.
+    이 파일들은 문서 컨테이너에서 확인할 수 있습니다.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image25.png)
 
-7.  ResourceGroup1로 다시 이동하고 **Search service**를 선택하세요.
+7.  ResourceGroup2로 다시 이동하고 **Search service**를 선택하세요.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image26.png)
 
 8.  URL을 복사하고 나중에 쓸 수 있도록 메모장에 저장하세요.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image27.png)
 
 9.  개요 페이지에서 검색 인덱스 생성 과정을 시작하려면 **Import
     data(new)**를 선택하세요.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image28.png)
 
 10. Data Source로 **Azure Blob Storage** 를 선택하세요.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image29.png)
 
 11. **RAG**를 선택하세요.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image30.png)
 
 12. **storage account** 및 **documents** 컨테이너를 선택하세요.
     **Authenticate using managed identity**가 선택되는지 확인하고
     **Next**를 클릭하세요.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image31.png)
 
 13. **Azure OpenAI service**를 선택하고 임베딩 모델로
@@ -260,55 +260,56 @@ incorrect.](./media/image31.png)
     identity**를 선택하고 추가 비용에 대해 확인 체크박스를 선택하세요.
     **Next** 버튼을 클릭하세요.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image32.png)
 
 14. **Vectorize and enrich your images** 단계에서 기본 설정을 유지하고
     **Next**를 선택하세요.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image33.png)
 
 15. **Enable semantic ranker**가 선택되는 확인하고 Next를 클릭하세요.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image34.png)
 
 16. 나중에 사용할 수 있도록 메모장에 **Objects name prefix value**를
     복사하세요. 검색 인덱스 이름이기 때문입니다. 이제 **Create**를
-    클릭하면 새인 작업을 시작하세요. ![A screenshot of a computer
-    AI-generated content may be incorrect.](./media/image35.png)
+    클릭하면 새인 작업을 시작하세요.
 
-17. 인덱싱 과정이 완료될 때까지 기다리세요. 문서의 크기와 수에 따라 몇
+    ![A screenshot of a computer AI-generated content may be incorrect.](./media/image35.png)
+
+18. 인덱싱 과정이 완료될 때까지 기다리세요. 문서의 크기와 수에 따라 몇
     분이 걸릴 수 있습니다. 과정이 완료되면 **Close**를 클릭하세요.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image36.png)
 
 18. 다시 한 번, 리소스 그룹을 열고 Azure OpenAI 서비스를 선택하세요.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image37.png)
 
 19. **Endpoint**를 선택하고 나중에 사용할 수 있도록 엔드포인트 값을
     메모장에 복사하세요.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image38.png)
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image39.png)
 
 20. Codespace 터미널로 이동해 검색 인덱스 이름을 AZD 환경 변수로
     설정하세요:
 
-+++azd env set SEARCH_INDEX_NAME \<your-search-index-name\>+++
+    +++azd env set SEARCH_INDEX_NAME < your-search-index-name >+++
 
-**참고:** \<your-search-index-name\>를 이전에 복사한 인덱스 이름으로
+    **참고:** < your-search-index-name >를 이전에 복사한 인덱스 이름으로
 교체하세요. AZD는 이후 배포에서 이 변수를 사용하여 앱 서비스 앱 설정을
 설정합니다.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image40.png)
 
 ## 작업 4: 애플리케이션을 테스트하고 배포하기
@@ -318,74 +319,75 @@ incorrect.](./media/image40.png)
 
 1.  Codespace 터미널에서 다음 명령어를 사용하여 AZD 환경 값을 얻으세요.
 
-+++azd env get-values+++
+    +++azd env get-values+++
 
-![](./media/image41.png)
+    ![](./media/image41.png)
 
 2.  **appsettings.Development.json**을 여세요**.** 터미널 출력을
     사용하여 의 값을 업데이트하세요:
 
-    - "OpenAIEndpoint": "\<value-of-OPENAI_ENDPOINT\>"
+    - "OpenAIEndpoint": "< value-of-OPENAI_ENDPOINT >"
 
-    - "SearchServiceUrl": "\<value-of-SEARCH_SERVICE_ENDPOINT\>",
+    - "SearchServiceUrl": "< value-of-SEARCH_SERVICE_ENDPOINT >",
 
-    - "SearchIndexName": "\<value-of-SEARCH_INDEX_NAME\>", ![A
-      screenshot of a computer AI-generated content may be
-      incorrect.](./media/image42.png)
+    - "SearchIndexName": "< value-of-SEARCH_INDEX_NAME >",
+    
+      ![A screenshot of a computer AI-generated content may be incorrect.](./media/image42.png)
 
 3.  Azure CLI 사용으로 Azure 로그인하세요:
 
-+++az login --use-device-code+++ 
+    +++az login --use-device-code+++ 
 
-![](./media/image43.png)
+    ![](./media/image43.png)
 
 4.  주어진 **URL**을 열고 인증 코드를 입력한 후 **Next **버튼을
     클릭하세요.
 
-![](./media/image44.png)
+    ![](./media/image44.png)
 
 5.  Azure 계정을 선택한 후 **Continue**를 클릭하세요.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image45.png)
 
-> ![A screenshot of a computer error AI-generated content may be
-> incorrect.](./media/image46.png)
+    ![A screenshot of a computer error AI-generated content may be incorrect.](./media/image46.png)
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image47.png)
 
 6.  애플리케이션을 로컬에서 실행하세요:
 
-+++dotnet run+++
+    +++dotnet run+++
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image48.png)
 
 7.  **your application running on port 5017 is available**가 보이면
     **Open in Browser**를 선택하세요.
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image49.png)
 
-브라우저에서 앱을 엽니다.
+    브라우저에서 앱을 엽니다.
 
-![](./media/image50.png)
+    ![](./media/image50.png)
 
 8.  다음 프롬프트를 입력하세요. 응답이 오면 애플리케이션이 Azure OpenAI
     리소스와 성공적으로 연결되고 있다는 뜻입니다.
 
-+++What does Contoso do with my personal information?+++
+    +++What does Contoso do with my personal information?+++
 
-![A screenshot of a chat AI-generated content may be
+    ![A screenshot of a chat AI-generated content may be
 incorrect.](./media/image51.png)
 
 9.  Ctrl+C**를 눌러** 실행 명령을 종료하세요. 다음으로, 다음 명령어를
     사용하여 애플리케이션을 배포하세요.
 
-+++azd up+++
+    +++azd env set AZURE_RESOURCE_GROUP ResourceGroup2+++
+    
+    +++azd up+++
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image52.png)
 
 **참고:** 전개를 완료하는 데 5-10분 정도 걸릴 것입니다.
@@ -399,40 +401,39 @@ incorrect.](./media/image52.png)
     open the external website?'라는 프롬프트가 표시되면 **Open**을
     클릭하세요.
 
-![A screenshot of a computer AI-generated content may be
-incorrect.](./media/image53.png)
+    ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image53.png)
+    
+    ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image54.png)
 
-![A screenshot of a computer AI-generated content may be
-incorrect.](./media/image54.png)
-
-업로드한 문서의 내용에 대해 질문을 입력할 수 있는 채팅 인터페이스가
+    업로드한 문서의 내용에 대해 질문을 입력할 수 있는 채팅 인터페이스가
 보입니다.
 
-![A screenshot of a chat AI-generated content may be
+    ![A screenshot of a chat AI-generated content may be
 incorrect.](./media/image55.png)
 
 2.  다음 질문을 해보세요:
 
-+++**How does Contoso use my personal data?**+++
+    +++**How does Contoso use my personal data?**+++
+    
+    +++**How do you file a warranty claim?**+++
 
-> +++**How do you file a warranty claim?**+++
-
-응답에 출처 문서를 참조하는 인용이 포함되어 있음을 관찰하세요. 이러한
+    응답에 출처 문서를 참조하는 인용이 포함되어 있음을 관찰하세요. 이러한
 인용문은 사용자가 정보의 정확성을 확인하고 출처 자료에서 더 많은 세부
 정보를 찾는 데 도움을 줍니다.
 
-![A screenshot of a chat AI-generated content may be
+    ![A screenshot of a chat AI-generated content may be
 incorrect.](./media/image56.png)
 
-팝업은 각 줄 끝에 위치한 1 또는 2라고 표시된 파란색 원을 클릭하면
-나타납니다.
+    팝업은 각 줄 끝에 위치한 1 또는 2라고 표시된 파란색 원을 클릭하면 나타납니다.
 
-![A screenshot of a chat AI-generated content may be
+    ![A screenshot of a chat AI-generated content may be
 incorrect.](./media/image57.png)
 
-![](./media/image58.png)
+    ![](./media/image58.png)
 
-![](./media/image59.png)
+    ![](./media/image59.png)
 
 ## 요약
 
