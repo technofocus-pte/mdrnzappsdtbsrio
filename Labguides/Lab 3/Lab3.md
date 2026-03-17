@@ -151,8 +151,6 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
 
     +++azd env set AZURE_RESOURCE_GROUP @lab.CloudResourceGroup(ResourceGroup2).Name+++
 
-    - **Enter a new environment Name:** +++blazorenv@lab.LabInstance.Id+++
-
     +++azd provision+++
 
     ![A screenshot of a computer AI-generated content may be
@@ -160,12 +158,14 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
 
 6.  When prompted, enter the following details:
 
-    - **Select Azure Subscription to use:** @lab.CloudSubscription.Name
+	- **Enter a new environment Name:** +++blazorenv@lab.LabInstance.Id+++
 
+    - **Select Azure Subscription to use:** @lab.CloudSubscription.Name
+      
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image16.png)
 
-7.  Wait for the deployment to complete; it will take 5-10 mins. This
+8.  Wait for the deployment to complete; it will take 5-10 mins. This
     process will:
 
     - Create all required Azure resources.
