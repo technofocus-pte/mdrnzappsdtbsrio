@@ -163,7 +163,7 @@ GitHub Copilot App Modernization 확장 기능은 앱을 쉽게 현대화하는 
 16. 각 섹션을 확장해 문제가 무엇인지, 그리고 어떻게 핼결할 수 있는지
     살펴보세요.
 
-17. 첫 번째 문제는 **Database Migration (PostgreSQL)**에 관한 것이며
+17. 첫 번째 문제는 **Database Migration (PostgreSQL)** 에 관한 것이며
     **Solution**은 **Azure Database for PostgreSQL**로 마이그레이션하는
     것입니다
 
