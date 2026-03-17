@@ -73,25 +73,25 @@ The easiest way to get started is using GitHub Codespaces, which
 provides a complete development environment with all required
 preinstalled tools.
 
-2.  Navigate to the GitHub repository
+1.  Navigate to the GitHub repository
     +++https://github.com/technofocus-pte/appserviceragopenai+++ and 
     sign in using your GithHub credentials.
 
-3.  Click on **Fork** to fork the repo.
+2.  Click on **Fork** to fork the repo.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image3.png)
 
-4.  Click on **Create fork**.
+3.  Click on **Create fork**.
 
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image4.png)
 
-5.  Once forked, click on **Code** \> **Codespaces** \> **Create
+4.  Once forked, click on **Code** \> **Codespaces** \> **Create
     codespace on main** to open a new codespace.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image5.png)
 
-6.  Wait for the codespace environment to set up. It takes a few minutes
+5.  Wait for the codespace environment to set up. It takes a few minutes
     to set up completely.
 
     ![A screenshot of a computer AI-generated content may be
