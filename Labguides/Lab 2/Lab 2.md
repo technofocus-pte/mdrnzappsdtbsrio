@@ -12,54 +12,51 @@
 
 이 연습에서는 로컬 시스템에서 애플리케이션을 실행하게 됩니다.
 
-1.  **C:** **extract**에서 **Labfiles zip** 파일을 선택하세요.
+1.  VS Code를 여세요. **Open Folder**를 선택하세요.
 
-2.  VS Code를 여세요. **Open Folder**를 선택하세요.
+    ![](./media/image1.png)
 
-![](./media/image1.png)
-
-3.  **C:/Labfiles**에서
+2.  **C:/Labfiles**에서
     **app-service-agentic-semantic-kernel-ai-foundry-agent-main** 포더를
     선택하세요.
 
-![](./media/image2.png)
+    ![](./media/image2.png)
 
-4.  팝업에서 **Yes, I trust the authors**를 선택하세요.
+3.  팝업에서 **Yes, I trust the authors**를 선택하세요.
 
-![](./media/image3.png)
+    ![](./media/image3.png)
 
-5.  상단 메뉴에서 3개의 점을 선택하세요. VSCode 터미널을 열고 앱을
+4.  상단 메뉴에서 3개의 점을 선택하세요. VSCode 터미널을 열고 앱을
     실행하려면 **Terminal** -\> **New Terminal**을 선택하세요.
 
-![](./media/image4.png)
+    ![](./media/image4.png)
 
-6.  열리면 터미널에서 아래 명령을 실행하여 지정된 버전의 NuGet 패키지
+5.  열리면 터미널에서 아래 명령을 실행하여 지정된 버전의 NuGet 패키지
     Microsoft.Agents.AI를 현재 프로젝트에 설치하세요.
 
-+++dotnet add package Microsoft.Agents.AI --version
-1.0.0-preview.251204.1+++
+    +++dotnet add package Microsoft.Agents.AI --version 1.0.0-preview.251204.1+++
 
-![](./media/image5.png)
+    ![](./media/image5.png)
+
+6.  다음으로 +++dotnet build+++ 명령어를 실행하여 프로젝트를 구축하세요.
+
+    ![](./media/image6.png)
 
 7.  다음으로 +++dotnet build+++ 명령어를 실행하여 프로젝트를 구축하세요.
 
-![](./media/image6.png)
+    ![](./media/image7.png)
 
-8.  다음으로 +++dotnet build+++ 명령어를 실행하여 프로젝트를 구축하세요.
-
-![](./media/image7.png)
-
-9.  명령어를 실행하면 브라우저를 열고 +++<http://localhost:5280>+++를
+8.  명령어를 실행하면 브라우저를 열고 +++<http://localhost:5280>+++를
     여세요
 
-![](./media/image8.png)
+    ![](./media/image8.png)
 
-10. 왼쪽에서 Microsoft Agent Framework 옵션을 선택하면 설정되지 않았다면
+9. 왼쪽에서 Microsoft Agent Framework 옵션을 선택하면 설정되지 않았다면
     메시지가 뜹니다. 이 실습에서 나중에 업데이트할 예정입니다.
 
-![](./media/image9.png)
+    ![](./media/image9.png)
 
-11. VS Code 터미널에서 Ctrl+C를 눌러 애플리케이션을 중지하세요.
+10. VS Code 터미널에서 Ctrl+C를 눌러 애플리케이션을 중지하세요.
 
 ## 에이전트 코드를 검토하기
 
@@ -149,74 +146,70 @@ var response = await this.Agent.RunAsync(sentInput, this.agentThread);
 
 1.  터미널에서 +++az login+++ 명령어를 실행하세요.
 
-![](./media/image10.png)
+    ![](./media/image10.png)
 
 2.  Work or school account를 선택하세요.
 
-![](./media/image11.png)
+    ![](./media/image11.png)
 
 3.  로그인 자격 증명으로 로그인하세요
 
-- Username - +++@lab.CloudPortalCredential(User1).Username+++
-
-- Password - +++@lab.CloudPortalCredential(User1).Password+++
-
-![](./media/image12.png)
-
-![](./media/image13.png)
+    - Username - +++@lab.CloudPortalCredential(User1).Username+++
+   
+    - Password - +++@lab.CloudPortalCredential(User1).Password+++
+   
+    ![](./media/image12.png)
+   
+    ![](./media/image13.png)
 
 4.  **No, this app only**를 선택하세요.
 
-![](./media/image14.png)
+    ![](./media/image14.png)
 
 5.  구독을 수락하려면 **Enter**를 선택하세요.
 
-![](./media/image15.png)
+    ![](./media/image15.png)
 
 6.  다음 단계에서 +++azd auth login+++ 명령어를 실행하고 로그되었는지
     확인하세요.
 
-![](./media/image16.png)
-
-![](./media/image17.png)
+    ![](./media/image16.png)
+   
+    ![](./media/image17.png)
 
 7.  완료되면 리소스를 배포하려면 +++azd up+++를 실행하세요.
 
-![](./media/image18.png)
+    ![](./media/image18.png)
 
-8.  환경 이름을 <+++envt@lab.LabInstance.Id>+++로 입력하세요.
+8.  환경 이름을 +++envt@lab.LabInstance.Id+++로 입력하세요.
 
-![](./media/image19.png)
+    ![](./media/image19.png)
 
-![](./media/image20.png)
+    ![](./media/image20.png)
 
 9.  구독을 선택하세요. Press 구독이 하나만 목록에 있으니 **Enter**를
     누르세요.
 
-![](./media/image21.png)
+    ![](./media/image21.png)
 
 10. 화살표 키를 이동하고 리소스 그룹으로 **ResourceGroup1**을
     선택하세요.
 
-![](./media/image22.png)
+    ![](./media/image22.png)
 
 11. 리소스은 생성되고 완료하는 데 약 10분 정도 걸립니다.
 
-![](./media/image23.png)
+    ![](./media/image23.png)
 
 12. 완료 후 터미널에 **endpoint**가 표시됩니다.
 
-![](./media/image24.png)
+    ![](./media/image24.png)
 
 13. Azure에서 애플리케이션에 접근하려면 엔드포인트 URL을 열어보세요.
 
-![](./media/image25.png)
+    ![](./media/image25.png)
 
-![](./media/image26.png)
-
-![](./media/image27.png)
-
-![](./media/image28.png)
+    ![](./media/image26.png)
 
 ## 작업 3: Microsoft Foundry 리소스를 생성하고 구성하기
 
@@ -226,43 +219,43 @@ var response = await this.Agent.RunAsync(sentInput, this.agentThread);
 1.  +++https://ai.azure.com+++를 열고 자격 증명으로 로그인하세요.
     상단의 **New Foundry** 라디오 버튼이 활성화되어 있는지 획인하세요.
 
-- 사용자 이름 - +++@lab.CloudPortalCredential(User1).Username+++
-
-- 비밀번호 - <+++@lab.CloudPortalCredential(User1).Password>+++
+   - 사용자 이름 - +++@lab.CloudPortalCredential(User1).Username+++
+   
+   - 비밀번호 - +++@lab.CloudPortalCredential(User1).Password+++
 
 2.  Select a project to continue 대화상자에서 **Create a new project**를
     선택하세요.
 
-![](./media/image29.png)
+    ![](./media/image29.png)
 
-3.  프로젝트 이름을 <+++proj@lab.LabInstance.Id>+++로 입력하고 Resource
+3.  프로젝트 이름을 +++proj@lab.LabInstance.Id+++로 입력하고 Resource
     group을 as **ResourceGroup1**로 선택하고 **Create**를 선택하세요.
 
-![](./media/image30.png)
+    ![](./media/image30.png)
 
-![](./media/image31.png)
+    ![](./media/image31.png)
 
 4.  다시 **Old Foundry**로 전환하세요. Overview 페이지에서 Azure
     OpenAI를 선택하고 엔드포인트 값을 복사하고 메모장에 저장하세요.
 
-![](./media/image32.png)
+    ![](./media/image32.png)
 
 5.  왼쪽 창에서 Models + endpoints를 선택하세요. **+ Deploy model** -\>
     **Deploy base model**을 선택하세요.
 
-![](./media/image33.png)
+    ![](./media/image33.png)
 
 6.  gpt-4.1을 선택하고 **Confirm**을 클릭하세요.
 
-![](./media/image34.png)
+    ![](./media/image34.png)
 
 7.  **Deploy**를 클릭하세요.
 
-![](./media/image35.png)
+    ![](./media/image35.png)
 
 8.  모델 이름을 메모장에 복사해서 붙여넣으세요.
 
-![](./media/image36.png)
+    ![](./media/image36.png)
 
 ## 작업 4: 필요한 권한 할당하기
 
@@ -275,42 +268,42 @@ var response = await this.Agent.RunAsync(sentInput, this.agentThread);
 
     - 비밀번호 - +++@lab.CloudPortalCredential(User1).Password+++
 
-![](./media/image37.png)
+    ![](./media/image37.png)
 
-1.  이전 작업에서 생성한 Foundry 리소스를 선택하세요.
+2.  이전 작업에서 생성한 Foundry 리소스를 선택하세요.
 
-![](./media/image38.png)
+    ![](./media/image38.png)
 
-2.  왼쪽 창에서 **Access control (IAM)**를 선택하세요.
+3.  왼쪽 창에서 **Access control (IAM)** 를 선택하세요.
 
-![](./media/image39.png)
+    ![](./media/image39.png)
 
-3.  **+ Add** -\> **Add role assignment**를 선택하세요.
+4.  **+ Add** -> **Add role assignment**를 선택하세요.
 
-![](./media/image40.png)
+    ![](./media/image40.png)
 
-4.  +++Cognitive Services OpenAI User+++를 검색하고 선택하세요.
+5.  +++Cognitive Services OpenAI User+++를 검색하고 선택하세요.
 
-![](./media/image41.png)
+    ![](./media/image41.png)
 
-5.  앞으로 나아가려면 **Next**를 선택하세요.
+6.  앞으로 나아가려면 **Next**를 선택하세요.
 
-![](./media/image42.png)
+    ![](./media/image42.png)
 
-6.  **Managed identity**를 선택하고 **Select members**를 선택하세요.
+7.  **Managed identity**를 선택하고 **Select members**를 선택하세요.
 
-![](./media/image43.png)
+    ![](./media/image43.png)
 
-7.  **Managed identity**를 **Foundry project**로 선택하고
-    <proj@lab.LabInstance.Id>를 선택하세요.
+8.  **Managed identity**를 **Foundry project**로 선택하고
+    proj@lab.LabInstance.Id를 선택하세요.
 
-![](./media/image44.png)
+    ![](./media/image44.png)
 
-8.  다음 2개의 화면에서 **Review + assign**을 선택하세요.
+9.  다음 2개의 화면에서 **Review + assign**을 선택하세요.
 
-![](./media/image45.png)
+    ![](./media/image45.png)
 
-> ![](./media/image46.png)
+    ![](./media/image46.png)
 
 ## 작업 5: 샘플 애플리케이션에 연결 변수를 구성하기
 
@@ -319,46 +312,37 @@ var response = await this.Agent.RunAsync(sentInput, this.agentThread);
 1.  VS Code에서 *appsettings.json*을 여세요. 앞서 Foundry 포털에서
     복사한 겂을 사용해 다음 변수들을 설정하세요.
 
-- AzureOpenAIEndpoint - Azure OpenAI 엔드포인트 (고전적인 Foundry
-  포털에서 복사함).
-
-- ModelDeployment – 배포에 모델 이름 (모델 playground에서 복사함).
-
-> ![](./media/image47.png)
+    - AzureOpenAIEndpoint - Azure OpenAI 엔드포인트 (고전적인 Foundry
+     포털에서 복사함).
+   
+    - ModelDeployment – 배포에 모델 이름 (모델 playground에서 복사함).
+   
+    ![](./media/image47.png)
 
 2.  터미널에서 +++dotnet run+++를 실행하세요
 
-![](./media/image48.png)
+    ![](./media/image48.png)
 
-3.  브라우저를 열고 +++localhost:5802+++로 이동하세요
+3.  브라우저를 열고 +++localhost:5280+++로 이동하세요
 
 4.  앱에 몇 가지 작업을 추가하세요.
 
-![](./media/image49.png)
+    ![](./media/image49.png)
 
-> ![](./media/image50.png)
+    ![](./media/image50.png)
 
 5.  이제 왼쪽 창에서 **Microsoft Agent Framework**를 선택하면 채팅
     박스가 열리는 것을 볼 수 있습니다.
 
-![](./media/image51.png)
+    ![](./media/image51.png)
 
-6.  Hi 또는 +++What are my current tasks+++라는 메시지를 입역하고
+6.  +++Hi+++ 또는 +++What are my current tasks+++라는 메시지를 입역하고
     에이전트에서 답변을 받으세요.
 
-![](./media/image52.png)
+    ![](./media/image52.png)
 
-![](./media/image53.png)
+    ![](./media/image53.png)
 
-7.  이제, 앱 변화를 배포하려면 +++azd up+++를 실행하세요.
-
-![](./media/image54.png)
-
-![](./media/image55.png)
-
-8.  Azure에서 앱을 보려면 엔드포인프를 여세요.
-
-![](./media/image56.png)
 
 ## 요약
 
