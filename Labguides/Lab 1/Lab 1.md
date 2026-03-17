@@ -82,6 +82,8 @@ GitHub Copilot App Modernization 확장 기능은 앱을 쉽게 현대화하는 
 
 ## 작업 2: Java 애플리케이션을 평가하기
 
+이 작업에서는 Visual Studio 코드에서 App Modernization 용 GitHub Copilot을 사용하여 기존 Java 애플리케이션을 분석하고 현대화 및 클라우드 마이그레이션 준비 상태를 평가합니다.
+
 1.  VSCode를 열고 **Select Folder**를 클릭하세요.
 
     ![](./media/image6.png)
@@ -208,15 +210,17 @@ GitHub Copilot App Modernization 확장 기능은 앱을 쉽게 현대화하는 
 
 ## 작업 3: Azure Database for PostgreSQL Flexible Server로 마이그레이션하기
 
+이 작업에서는 App Modernization 용 GitHub Copilot을 사용하여 애플리케이션의 데이터베이스 구성을 PostgreSQL에서 PostgreSQL – Flexible Server용 Azure 데이터베이스로 마이그레이션합니다.
+
 1.  **Database Migration**부터 시작합니다. Assessment Report의 Issues
     -\> Issue Category에 나열된 Database Migration(PostgreSQL) 이슈에
     대해 **Run Task**를 선택하세요.
 
-![](./media/image31.png)
+    ![](./media/image31.png)
 
 2.  작업이 시작되고 자세한 내용은 채팅창에 체워집니다.
 
-> ![](./media/image32.png)
+    ![](./media/image32.png)
 
 3.  작업이 진행되는 동안 GitHub Copilot은 먼저 **실행 계획을** 새우고
     적절한 **파일**에 **변경**을 시작합니다. 각 **행동**은 **채팅**창에
@@ -225,9 +229,9 @@ GitHub Copilot App Modernization 확장 기능은 앱을 쉽게 현대화하는 
     요청합니다. 또한, 획인이 필요한 곳에서는 계속을 위해 사용자 확인을
     요청합니다. **Continue**를 클릭해야만 진행됩니다.
 
-![](./media/image33.png)
-
-![](./media/image34.png)
+    ![](./media/image33.png)
+    
+    ![](./media/image34.png)
 
 4.  채팅에 나오는 파일 이름을 선택해서 여세요. 파일은 추가를 위한 녹색
     색상 코드, 삭제를 위한 빨간색 코드가 있습니다.
@@ -235,64 +239,64 @@ GitHub Copilot App Modernization 확장 기능은 앱을 쉽게 현대화하는 
 5.  변경 사항을 꼼꼼히 검토하고 이해한 후, 파일을 계속 보관해 변경
     사항을 **유지**하세요.
 
-![](./media/image35.png)
-
-![](./media/image36.png)
-
-![](./media/image37.png)
+    ![](./media/image35.png)
+    
+    ![](./media/image36.png)
+    
+    ![](./media/image37.png)
 
 6.  아래 스크린샷에서 Aws 설정이 제거되고 Azure Storage 블롭이 추가된
     것을 볼 수 있습니다.
 
-![](./media/image38.png)
-
-![](./media/image39.png)
+    ![](./media/image38.png)
+    
+    ![](./media/image39.png)
 
 7.  각 파일을 검토하고 **Keep**을 클릭하세요. 프롬프트되면
     **Continue**를 선택하세요.
 
-![](./media/image40.png)
-
-![](./media/image41.png)
-
-![](./media/image42.png)
-
-![](./media/image43.png)
-
-![](./media/image44.png)
-
-![](./media/image45.png)
-
-![](./media/image46.png)
+    ![](./media/image40.png)
+    
+    ![](./media/image41.png)
+    
+    ![](./media/image42.png)
+    
+    ![](./media/image43.png)
+    
+    ![](./media/image44.png)
+    
+    ![](./media/image45.png)
+    
+    ![](./media/image46.png)
 
 8.  **Todos** 섹션은 작성된 계획의 진행 상황과 몇 개가 완료되었는지, 몇
     개가 완료되었는지에 대한 상태를 보여줍니다.
 
-![](./media/image47.png)
-
-![](./media/image48.png)
-
-![](./media/image49.png)
-
-![](./media/image50.png)
-
-![](./media/image51.png)
-
-![](./media/image52.png)
-
-![](./media/image53.png)
-
-![](./media/image54.png)
-
-![](./media/image55.png)
+    ![](./media/image47.png)
+    
+    ![](./media/image48.png)
+    
+    ![](./media/image49.png)
+    
+    ![](./media/image50.png)
+    
+    ![](./media/image51.png)
+    
+    ![](./media/image52.png)
+    
+    ![](./media/image53.png)
+    
+    ![](./media/image54.png)
+    
+    ![](./media/image55.png)
 
 9.  첫 번째 작업이 완료되었고 **Migration compete** 메시지가 표시됩니다.
 
-![](./media/image56.png)
+    ![](./media/image56.png)
 
 10. 또한, 요약 파일은 프로젝트에 저장됩니다.
 
-![](./media/image57.png)
+    ![](./media/image57.png)
 
 ## 작업 5: AWS S3에서 Azure Blob Storage로 마이그레이션하기
 
@@ -301,12 +305,12 @@ GitHub Copilot App Modernization 확장 기능은 앱을 쉽게 현대화하는 
 
 1.  **Storage Migration (AWS S3)** 이슈에 대한 Run Task를 선택하세요.
 
-![](./media/image58.png)
+    ![](./media/image58.png)
 
 2.  GitHub Copilot은 \#appmod-run-task by kbId:
     s3-to-azure-blob-storage를 실행합니다.
 
-![](./media/image59.png)
+    ![](./media/image59.png)
 
 3.  GHCP는 MCP Server를 사용하여 run appmod-run-task,
     appmod-fetch-knowledgebase,appmod-search-file 등 다양한 작업을 계속
@@ -317,24 +321,23 @@ GitHub Copilot App Modernization 확장 기능은 앱을 쉽게 현대화하는 
 
 4.  제안된 코드 변경사항을 검토한 후 Keep를 클릭하고 적용하세요.
 
-![](./media/image60.png)
+    ![](./media/image60.png)
 
 5.  이 작업이 완료되면 다음 작업으로 넘어갈 수 있습니다.
 
 ## 작업6: AMQP RabbitMQ에서 Azure Service Bus로 마이그레이션하기
 
-> 애플리케이션 asset-manager는 메시지 큐잉을 위해 Spring AMQP와
-> RabbitMQ를 사용합니다. 대신 Azure Service Bus로 넘어가겠습니다.
+애플리케이션 asset-manager는 메시지 큐잉을 위해 Spring AMQP와 RabbitMQ를 사용합니다. 대신 Azure Service Bus로 넘어가겠습니다.
 
 1.  이번 워크숍에서는 **Messaging Service Migration**에 대해
     살펴보겠습니다. **Migrate from AMQP RabbitMQ to Azure Service
     Bus**를 할 것입니다.
 
-![](./media/image61.png)
+    ![](./media/image61.png)
 
 6.  **Run Task**를 클릭하세요.
 
-![](./media/image62.png)
+    ![](./media/image62.png)
 
 7.  GitHub Copilot는 #appmod-run-task by kbId:
     amqp-rabbitmq-servicebus를 실행합니다.
