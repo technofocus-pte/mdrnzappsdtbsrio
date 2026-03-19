@@ -56,7 +56,7 @@ Managed identity based authentication
 
 In order to execute this lab, you will need a **Github account** with **Github Copilot** enabled. If you do not have one, please create one form here -+++https://github.com/signup+++
 
->[!Note] **Note:** As we use AI, the results might vary a bit and might vary from the screenshots provided in this lab guide. There might be iterations required and it would differ for every individual's execution.
+>[!Alert] **Important:** As we use AI, the results might vary a bit and might vary from the screenshots provided in this lab guide. There might be iterations required and it would differ for every individual's execution.
  
 ## Task 1: Install the GitHub Copilot Modernization extension
 
