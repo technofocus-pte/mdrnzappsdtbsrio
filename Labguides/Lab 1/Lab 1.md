@@ -1,15 +1,15 @@
-# Lab 1 - GitHub Copilot App Modernization for Java - Migrate to Azure
+# Lab 1 - GitHub Copilot Modernization for Java - Migrate to Azure
 
 This lab walks through assessing and migrating the sample Java
 application **asset-manager** from AWS/RabbitMQ/Postgres to Azure Blob
 Storage, Azure Service Bus, and Azure Database for PostgreSQL using
-**GitHub Copilot App Modernization for Java**.
+**GitHub Copilot Modernization for Java**.
 
 **Overview**
 
-This hands-on lab demonstrates **assessing** and **migrating** a **Java web + worker application** to **Azure** using **GitHub Copilot App Modernization for Java**. 
+This hands-on lab demonstrates **assessing** and **migrating** a **Java web + worker application** to **Azure** using **GitHub Copilot Modernization for Java**. 
 
-**GitHub Copilot App Modernization for Java**, also referred to as App Modernization for Java or AppMod, assists with app assessment, planning and code remediation using a Visual Studio Code Extension and GitHub Copilot. It automates repetitive tasks, boosting developer confidence and speeding up the Azure migration and ongoing optimization.
+**GitHub Copilot Modernization for Java**, also referred to as App Modernization for Java or AppMod, assists with app assessment, planning and code remediation using a Visual Studio Code Extension and GitHub Copilot. It automates repetitive tasks, boosting developer confidence and speeding up the Azure migration and ongoing optimization.
 
 **About the Project**
 
@@ -56,7 +56,7 @@ Managed identity based authentication
 
 In order to execute this lab, you will need a **Github account** with **Github Copilot** enabled. If you do not have one, please create one form here -+++https://github.com/signup+++
 
-## Task 1: Install the GitHub Copilot App Modernization extension
+## Task 1: Install the GitHub Copilot Modernization extension
 
 In this task, you will install the extension in the VS Code that is required for this lab execution.
 
@@ -64,13 +64,13 @@ In this task, you will install the extension in the VS Code that is required for
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image3.png)
 
-2.  Search for and select +++GitHub Copilot app modernization+++ and then select **Install**.
+2.  Search for and select +++GitHub Copilot modernization+++ and then select **Install**.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image4.png)
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image5.png)
 
-The GitHub Copilot App Modernization extension is what will help in modernizing the apps easily.
+The GitHub Copilot Modernization extension is what will help in modernizing the apps easily.
 
 ## Task 2: Assess Your Java Application
 
@@ -117,7 +117,7 @@ In this task, you will use **GitHub Copilot for App Modernization** in Visual St
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image13.png)
 
-11. From the Quick Start section of GitHub Copilot App Modernization,
+11. From the Quick Start section of GitHub Copilot Modernization,
     select **Start Assessment**.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image14.png)
