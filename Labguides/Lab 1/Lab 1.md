@@ -56,6 +56,8 @@ Managed identity based authentication
 
 In order to execute this lab, you will need a **Github account** with **Github Copilot** enabled. If you do not have one, please create one form here -+++https://github.com/signup+++
 
+>[!Note] **Note:** As we use AI, the results might vary a bit and might vary from the screenshots provided in this lab guide. There might be iterations required and it would differ for every individual's execution.
+ 
 ## Task 1: Install the GitHub Copilot Modernization extension
 
 In this task, you will install the extension in the VS Code that is required for this lab execution.
@@ -122,6 +124,11 @@ In this task, you will use **GitHub Copilot for App Modernization** in Visual St
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image14.png)
 
+12. If you get an option to select "how you want to assess", select **Recommended assessment**.
+
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image63.png)
+
+
 12. Check the progress of the assessment.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image15.png)
@@ -145,9 +152,8 @@ about the application.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image19.png)
 
-16. Scroll down to see the details on the issues. In this case, you have
-    **9 issues** under the **Cloud Readiness category** and there are
-    non under Java Upgrade category.
+16. Scroll down to see the details on the issues. You will see the **issues** under the **Cloud Readiness category** and there are
+    none under Java Upgrade category.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image20.png)
 
