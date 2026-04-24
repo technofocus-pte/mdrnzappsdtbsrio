@@ -1,464 +1,427 @@
-# Lab 3 - Build a RAG application using Azure OpenAI and Azure AI Search and deploy to Azure App Service
+# ラボ3 - Azure OpenAI（テキスト埋め込みモデル）とAzure AI Searchを使用して検索拡張生成（RAG）アプリケーションを構築し、Azure App Serviceにデプロイする
 
-**Time Duration: 50 mins**
+**所要時間：45分**
 
-In this tutorial, you'll create a .NET retrieval augmented generation
-(RAG) application using .NET Blazor, Azure OpenAI, and Azure AI Search
-and deploy it to Azure App Service. This application demonstrates how to
-implement a chat interface that retrieves information from your
-documents and leverages Azure AI services to provide accurate,
-contextually aware answers with proper citations. The solution uses
-managed identities for passwordless authentication between services.
+このチュートリアルでは、.NET Blazor、Azure OpenAI、Azure AI Search
+を使用して .NET 取得拡張生成 (RAG) アプリケーションを作成し、Azure App
+Service
+にデプロイします。このアプリケーションは、ドキュメントから情報を取得し、Azure
+AI
+サービスを活用して適切な引用を含む正確で文脈に応じた回答を提供するチャット
+インターフェイスの実装方法を示します。このソリューションでは、サービス間のパスワードレス認証にマネージド
+ID を使用します。
 
 ![Screenshot showing the Blazor chat interface in
-introduction.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image1.png)
+introduction.](./media/image1.png)
 
-In this tutorial, you learn how to:
+このチュートリアルでは、以下の方法を学びます。
 
-- Deploy a Blazor application that uses RAG pattern with Azure AI
-  services.
+- Azure AI サービスと RAG パターンを使用する Blazor
+  アプリケーションをデプロイします。
 
-- Configure Azure OpenAI and Azure AI Search for hybrid search.
+- ハイブリッド検索のために、Azure OpenAIとAzure AI Searchを構成します。
 
-- Upload and index documents for use in your AI-powered application.
+- AI搭載アプリケーションで使用するドキュメントをアップロードしてインデックス化します。
 
-- Use managed identities for secure service-to-service communication.
+- サービス間の安全な通信には、マネージドIDを使用してください。
 
-- Test your RAG implementation locally with production services.
+- RAGの実装を、本番エンビロンメントのサービスと連携させてローカルでテストしてください。
 
-**Architecture overview**
+**アーキテクチャの概要**
 
-Before you begin deployment, it's helpful to understand the architecture
-of the application you'll build. The following diagram is from custom
-RAG pattern for Azure AI Search:  
+デプロイを開始する前に、構築するアプリケーションのアーキテクチャを理解しておくと役立ちます。次の図は、Azure
+AI Search 用のカスタム RAG パターンからのものです。
 
 ![Architecture diagram showing a web app connecting to Azure OpenAI and
-Azure AI Search, with Storage as the data source](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image2.png)
+Azure AI Search, with Storage as the data source](./media/image2.png)
 
-In this tutorial, the Blazer application in App Service takes care of
-both the app UX and the app server. However, it doesn't make a separate
-knowledge query to Azure AI Search. Instead, it tells Azure OpenAI to do
-the knowledge querying, specifying Azure AI Search as a data source.
-This architecture offers several key advantages:
+このチュートリアルでは、App Service の Blazer アプリケーションがアプリの
+UX とアプリ サーバーの両方を処理します。ただし、Azure AI Search
+に対して個別の知識クエリは実行しません。代わりに、Azure OpenAI
+に知識クエリを実行するように指示し、データ ソースとして Azure AI Search
+を指定します。このアーキテクチャには、いくつかの重要な利点があります。
 
-- **Integrated Vectorization**: Azure AI Search's integrated
-  vectorization capabilities make it easy and quick to ingest all your
-  documents for searching, without requiring more code for generating
-  embeddings.
+- **統合されたベクトル化**：Azure AI Search
+  の統合されたベクトル化機能により、埋め込みを生成するための追加のコードを必要とせずに、すべてのドキュメントを簡単かつ迅速に検索対象として取り込むことができます。
 
-- **Simplified API Access**: By using the Azure OpenAI on your
-  data pattern with Azure AI Search as a data source for Azure OpenAI
-  completions, there's no need to implement complex vector search or
-  embedding generation. It's just one API call, and Azure OpenAI handles
-  everything, including prompt engineering and query optimization.
+- **API アクセスの簡素化**：Azure OpenAI をデータパターンに適用し、Azure
+  AI Search を Azure OpenAI
+  補完のデータソースとして使用することで、複雑なベクトル検索や埋め込み生成を実装する必要がなくなります。API
+  呼び出しは 1 回だけで済み、プロンプト
+  エンジニアリングやクエリ最適化など、すべて Azure OpenAI が処理します。
 
-- **Advanced Search Capabilities**: The integrated vectorization
-  provides everything needed for advanced hybrid search with semantic
-  reranking, which combines the strengths of keyword matching, vector
-  similarity, and AI-powered ranking.
+- **高度な検索機能**：統合されたベクトル化により、キーワードマッチング、ベクトル類似性、AIによるランキングの強みを組み合わせた、セマンティック再ランキングによる高度なハイブリッド検索に必要なすべてが提供されます。
 
-- **Complete Citation Support**: Responses automatically include
-  citations to source documents, making information verifiable and
-  traceable.
+- **完全な引用サポート**：回答には自動的に出典文書への引用が含まれるため、情報の検証と追跡が可能になります。
 
-**Prerequisites**
+**前提条件**
 
-- A GitHub account for using GitHub Codespaces. If you don’t have GitHub
-  account, then you can create
-  from [here](https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F&source=header-home).
+- Codespacesを使用するにはGitHubアカウントが必要です。GitHubアカウントをお持ちでない場合は、[こちらから作成できます](https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F&source=header-home)。
 
-## Task 1: Open GitHub Codespaces
+## タスク1：GitHub Codespacesを開く
 
-The easiest way to get started is using GitHub Codespaces, which
-provides a complete development environment with all required
-preinstalled tools.
+最も簡単に始める方法は、GitHub Codespaces
+を利用することです。これは、必要なツールがすべてプリインストールされた完全な開発エンビロンメントを提供します。
 
-1.  Navigate to the GitHub repository
-    +++https://github.com/technofocus-pte/appserviceragopenai+++ and 
-    sign in using your GithHub credentials.
+1.  **C**ドライブから、**Labfilesのzip**ファイルを解凍してください。
 
-2.  Click on **Fork** to fork the repo.
+2.  GitHubリポジトリ+++https://github.com/technofocus-pte/appserviceragopenai+++、
+    GithHubの認証情報を使用してサインインしてください。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image3.png)
+3.  リポジトリをフォークするには、 **「Fork」**をクリックしてください。
 
-3.  Click on **Create fork**.
+    ![](./media/image3.png)
+
+4.  **「Create fork」**をクリックします。
 
     ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image4.png)
+incorrect.](./media/image4.png)
 
-4.  Once forked, click on **Code** \> **Codespaces** \> **Create
-    codespace on main** to open a new codespace.
+5.  フォークしたら、 **\[Code** \> **Codespaces** \> **Create codespace
+    on main\]**をクリックして新しいCodespaceを開きます。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image5.png)
+    ![](./media/image5.png)
 
-5.  Wait for the codespace environment to set up. It takes a few minutes
-    to set up completely.
+6.  Codespaceエンビロンメントのセットアップが完了するまでお待ちください。セットアップには数分かかります。
 
-    ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image6.png)
+    ![A screenshot of a computer AI-generated content may be incorrect.](./media/image6.png)
 
-    ![A screenshot of a computer AI-generated content may be incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image7.png)
+    ![A screenshot of a computer AI-generated content may be incorrect.](./media/image7.png)
 
-## Task 2: Deploy the given architecture
+## タスク2：指定されたアーキテクチャをデプロイする
 
-In this exercise, you are going to deploy the provided architecture to
-your Azure account.
+この演習では、提供されたアーキテクチャをAzureアカウントにデプロイします。
 
-1.  In the terminal, log into your Azure using Azure Developer CLI:
+1.  ターミナルで、Azure Developer CLI を使用して Azure
+    にログインします。
 
     +++azd auth login+++
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image8.png)
+    ![](./media/image8.png)
 
-2.  Copy the code and then press the **Enter** key, and it will open a
-    new browser window where you need to enter the given code and then
-    click the **Next** button.
+2.  コードをコピーして**Enter**キーを押すと、新しいブラウザウィンドウが開きます。そこにコピーしたコードを入力し、「**Next」**ボタンをクリックしてください。
 
     ![A screenshot of a computer error AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image9.png)
+incorrect.](./media/image9.png)
 
-3.  Sign-in to your **Azure account** using the following credentials
-    and then click on the **Continue** button.
+3.  以下の認証情報を使用して**Azureアカウント**にサインインし、
+    **\[Countinue\]**ボタンをクリックしてください。
 
-    - Username: +++@lab.CloudPortalCredential(User1).Username+++
+    - ユーザー名: [+++@
+      lab.CloudPortalCredential](mailto:+++@lab.CloudPortalCredential)
+      (User1 ).Username+++
 
-    - TAP Token: +++@lab.CloudPortalCredential(User1).AccessToken+++
+    - TAPトークン: [+++@
+      lab.CloudPortalCredential](mailto:+++@lab.CloudPortalCredential)
+      (User1 ). AccessToken+++
 
-    ![A screenshot of a computer AI-generated content may be incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image10.png)
+    ![A screenshot of a computer AI-generated content may be incorrect.](./media/image10.png)
 
     ![A screenshot of a login box AI-generated content may be
-    incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image11.png)
+    incorrect.](./media/image11.png)
 
     ![A screenshot of a computer error AI-generated content may be
-    incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image12.png)
+    incorrect.](./media/image12.png)
 
-    Now your account is successfully connected with the Codespace terminal.
+    Codespaceターミナルに正常に接続されました。
 
     ![A close-up of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image13.png)
+    incorrect.](./media/image13.png)
 
     ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image14.png)
+    incorrect.](./media/image14.png)
 
-1. In the Github codespace, open the **infra** folder on the left hand side and select the **main.bicep** file. Verify line 8 uses the correct unique suffix for naming resources by using **tags.LabInstance**. If you notice line 8 still reads as: param resourceToken string = **uniqueString(resourceGroup().id, environmentName)**,
-please change **uniqueString(resourceGroup().id, environmentName)** to +++resourceGroup().tags.LabInstance+++ and select **ctrl+s** to save the change.
+4.  ターミナルで、次のコマンドを実行して、AZDテンプレートを使用してAzureリソースをプロビジョニングします。
 
-    ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image60.png)
-
-4.  In the terminal, execute the following two commands to provision the
-    Azure resources with the AZD template:
-
-    +++azd env set AZURE_RESOURCE_GROUP @lab.CloudResourceGroup(ResourceGroup2).Name+++
-
-    +++azd provision+++
+    +++azd provision +++
 
     ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image15.png)
+    incorrect.](./media/image15.png)
 
-6.  When prompted, enter the following details:
+5.  指示が表示されたら、以下の詳細を入力してください。
 
-	- **Enter a new environment Name:** +++blazorenv@lab.LabInstance.Id+++
+    - **Enter a new environment Name:** [+++
+      blazorenv@lab.LabInstance.Id](mailto:+++blazorenv@lab.LabInstance.Id)
+      +++
 
-    - **Select Azure Subscription to use:** @lab.CloudSubscription.Name
-      
-    ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image16.png)
+    - **Select Azure Subscription to
+      use:**サブスクリプションを選択してください
 
-8.  Wait for the deployment to complete; it will take 5-10 mins. This
-    process will:
-
-    - Create all required Azure resources.
-
-    - Deploy the application to Azure App Service.
-
-    - Configure secure service-to-service authentication using managed
-      identities.
-
-    - Set up the necessary role assignments for secure access between
-      services.
-
-    After successful deployment, you'll see a URL for your deployed
-application.
-
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image17.png)
-
-## Task 3: Upload documents and create a search index
-
-Now that the infrastructure is deployed, you need to upload documents
-and create a search index that the application will use.
-
-1.  Open the given URL using **Ctrl+Click** to view all the created
-    resources.
+    - **Pick a resource group to use: ResourceGroup1**を選択してください
 
     ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image18.png)
+incorrect.](./media/image16.png)
 
-2.  Select the **storage account** that was created by the deployment.
+6.  デプロイが完了するまでお待ちください。5～10分かかります。このプロセスでは以下のことが行われます。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image19.png)
+    - 必要なAzureリソースをすべて作成します。
 
-3.  Select **Containers** under **Data Storage** from the left
-    navigation menu and open the **documents** container. The document
-    container is empty. Now you will upload documents into it.
+    - アプリケーションをAzure App Serviceにデプロイします。
 
-    ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image20.png)
+    - マネージドIDを使用して、安全なサービス間認証を設定します。
 
-4.  Click on the **Upload** button.
+    - サービス間の安全なアクセスを確保するために必要な役割割り当てを設定します。
 
-    ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image21.png)
+    デプロイが正常に完了すると、デプロイされたアプリケーションのURLが表示されます。
 
-5.  Click on **Browse for files**, navigate
-    to **C:\LabFiles\RAG**,
-    select all five documents, and then click the **Open** button.
+    ![](./media/image17.png)
 
-    ![A screenshot of a computer AI-generated content may be
-    incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image22.png)
+## タスク3：ドキュメントをアップロードして検索インデックスを作成する
+
+インフラストラクチャの展開が完了したので、ドキュメントをアップロードし、アプリケーションが使用する検索インデックスを作成する必要があります。
+
+1.  **Ctrlキー**を押しながら指定されたURLをクリックして、作成されたすべてのリソースを表示してください。
 
     ![A screenshot of a computer AI-generated content may be
-    incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image23.png)
+incorrect.](./media/image18.png)
 
-6.  Then click the **Upload**.
+2.  デプロイメントによって作成された**ストレージアカウント**を選択してください。
 
-    ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image24.png)
+    ![](./media/image19.png)
 
-    You can view these files in the document container.
-
-    ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image25.png)
-
-7.  Navigate back to the ResourceGroup2 and select the **Search
-    service**.
+3.  左側のナビゲーションメニューから**「Data
+    Storage」**の下にある**「Containers」を**選択し、
+    **「documents」**コンテナを開きます。ドキュメントコンテナは空です。これからドキュメントをアップロードしていきます。
 
     ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image26.png)
+incorrect.](./media/image20.png)
 
-8.  Copy the URI and save it in the Notepad for future use.
-
-    ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image27.png)
-
-9.  Select **Import data(new)** to start the process of creating a
-    search index from the overview page.
+4.  **Upload**ボタンをクリックしてください。
 
     ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image28.png)
+incorrect.](./media/image21.png)
 
-10. Select **Azure Blob Storage** as the Data Source.
-
-    ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image29.png)
-
-11. Select **RAG**.
+5.  **「Browse for files」**をクリックし、
+    **C:\LabFiles\Build-a-RAG-application-using-Azure-OpenAI-and-Azure-AI-Search-and-deploy-to-Azure-App-Service**
+    に移動して、5 つのドキュメントすべてを選択し、
+    **「Open」**ボタンをクリックします。
 
     ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image30.png)
-
-12. Choose your **storage account** and the **documents** container.
-    Ensure that **Authenticate using managed identity** is selected, and
-    then click **Next**.
+    incorrect.](./media/image22.png)
 
     ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image31.png)
+    incorrect.](./media/image23.png)
 
-13. Choose your **Azure OpenAI service** and
-    select **text-embedding-ada-002** as the embedding model. The AZD
-    template has already deployed this model. Then, select **System
-    assigned identity** for authentication and check the acknowledgement
-    checkbox for additional costs. Click on the **Next** button.
+6.  次に**「Upload」**をクリックします。
 
     ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image32.png)
+    incorrect.](./media/image24.png)
 
-14. In the **Vectorize and enrich your images** step, keep the default
-    settings as it is and select **Next**.
-
-    ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image33.png)
-
-15. Ensure **Enable semantic ranker** is selected and then click Next.
+    これらのファイルはドキュメントコンテナ内で閲覧できます。
 
     ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image34.png)
+    incorrect.](./media/image25.png)
 
-16. Copy the **Objects name prefix** value in Notepad for future use, as
-    it is your search index name. Now, click **Create** to start the
-    indexing process. ![A screenshot of a computer AI-generated content
-    may be incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image35.png)
-
-17. Wait for the indexing process to complete. This might take a few
-    minutes, depending on the size and number of your documents. Once
-    the process is complete, click **Close**.
+7.  ResourceGroup1 に戻り、**Search service**を選択します。
 
     ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image36.png)
+incorrect.](./media/image26.png)
 
-18. Again, open the resource group and select Azure OpenAI service.
-
-    ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image37.png)
-
-19. Select the **Endpoint** and then copy the value of the endpoint in
-    Notepad for future use.
+8.  URIをコピーしてメメモ帳に保存し、後で使用してください。
 
     ![A screenshot of a computer AI-generated content may be
-    incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image38.png)
+incorrect.](./media/image27.png)
+
+9.  Overviewページから、「**Import
+    data(new)**」を選択し、検索インデックスの作成プロセスを開始します。
 
     ![A screenshot of a computer AI-generated content may be
-    incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image39.png)
+incorrect.](./media/image28.png)
 
-21. Navigate to Codespace terminal and set the search index name as an AZD environment variable:
-
-    +++azd env set SEARCH_INDEX_NAME < your-search-index-name >+++
-
-    >[!Note] Replace < your-search-index-name > with the index name you
-copied previously. AZD uses this variable in subsequent deployments to
-set the App Service app setting.
+10. データソースとして**Azure Blob Storage**を選択します。
 
     ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image40.png)
+incorrect.](./media/image29.png)
 
-## Task 4: Test the application and deploy
+11. **RAG**を選択してください。
 
-In this task, you will test the application either before or after
-deployment directly from your Codespace. Once you’ve confirmed that the
-application is functioning properly, proceed with the deployment.
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image30.png)
 
-1.  In the Codespace terminal, get the AZD environment values using the
-    following command.
+12. **ストレージアカウント**と**ドキュメント**コンテナを選択します。
+    **「Authenticate using managed
+    identity」**が選択されていることを確認し、
+    **「Next」**をクリックします。
 
-    +++azd env get-values+++
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image31.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image41.png)
+13. **Azure OpenAI
+    サービス**を選択し、埋め込みモデルとして**text-embedding-ada-002**を選択します**。**AZD
+    テンプレートには既にこのモデルがデプロイされています。次に、**System
+    assigned
+    identity** を選択し、追加費用に関する確認チェックボックスをオンにします。**\[Next\]**ボタンをクリックします。
 
-2.  Open **appsettings.Development.json.** Using the terminal output,
-    update the values of:
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image32.png)
 
-    - "OpenAIEndpoint": "<value-of-OPENAI_ENDPOINT>"
+14. **「Vectorize and enrich your
+    images」**ステップでは、デフォルト設定のままにして**「Next」**を選択します。
 
-    - "SearchServiceUrl": "<value-of-SEARCH_SERVICE_ENDPOINT>",
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image33.png)
 
-    - "SearchIndexName": "<value-of-SEARCH_INDEX_NAME>", 
+15. **「Enable semantic
+    ranker」**が選択されていることを確認し、「Next」をクリックします。
+
+    ![A screenshot of a computer AI-generated content may be incorrect.](./media/image34.png)
+
+16. **Objects name
+    prefix**の値をメモ帳にコピーしておいてください。これは検索インデックス名になります。次に、
+    **「Create」**をクリックしてインデックス作成プロセスを開始します。
     
-    ![A screenshot of a computer AI-generated content may be
-      incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image42.png)
+    ![A screenshot of a computer AI-generated content may be incorrect.](./media/image35.png)
 
-3.  Sign in to Azure with the Azure CLI:
-
-    +++az login --use-device-code+++ 
-
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image43.png)
-
-4.  Open the given **URL** and enter the authentication code, and then
-    click on the **Next** button.
-
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image44.png)
-
-5.  Select your Azure account and then click on **Continue**.
+17. インデックス作成処理が完了するまでお待ちください。ドキュメントのサイズと数によっては、数分かかる場合があります。処理が完了したら、
+    **「Close」**をクリックしてください。
 
     ![A screenshot of a computer AI-generated content may be
-    incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image45.png)
+incorrect.](./media/image36.png)
 
-    ![A screenshot of a computer error AI-generated content may be incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image46.png)
+18. 再度、リソースグループを開き、Azure
+    OpenAIサービスを選択してください。
 
     ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image47.png)
+incorrect.](./media/image37.png)
 
-6.  Run the application locally:
+19. **エンドポイント**を選択し、そのエンドポイントの値をメモ帳にコピーして、後で使用できるように保存してください。
+
+    ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image38.png)
+
+    ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image39.png)
+
+20. Codespaceターミナルに移動し、検索インデックス名をAZDエンビロンメント変数として設定します。
+
+    +++ azd env set SEARCH_INDEX_NAME \<your-search-index-name\>+++
+
+    **注：**
+    <your-search-index-name>を、以前コピーしたインデックス名に置き換えてください。AZDはこの変数を使用して、以降のデプロイでApp Serviceアプリの設定を行います。
+
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image40.png)
+
+## タスク4：アプリケーションのテストとデプロイ
+
+Codespaceから直接、デプロイ前またはデプロイ後にアプリケーションをテストします。アプリケーションが正しく動作することを確認したら、デプロイに進んでください。
+
+1.  Codespaceのターミナルで、以下のコマンドを使用してAZDエンビロンメントの値を取得します。
+
+    +++ azd env get-values+++
+
+    ![](./media/image41.png)
+
+2.  **appsettings.Development.json**を開きます**。**ターミナルの出力を使用して、以下の値を更新します。
+
+    - "OpenAIEndpoint": "<value-of-openai_ENDPOINT>"
+
+    - "SearchServiceUrl": "< value-of-SEARCH_SERVICE_ENDPOINT>",
+
+    - " SearchIndexName ": "< value-of-SEARCH_INDEX_NAME>",
+    
+    ![A screenshot of a computer AI-generated content may be incorrect.](./media/image42.png)
+
+3.  Azure CLI を使用して Azure にサインインします。
+
+    +++ az login --use-device-code+++
+
+    ![](./media/image43.png)
+
+4.  指定された**URL**を開き、認証コードを入力してから、
+    **「Next」**ボタンをクリックしてください。
+
+    ![](./media/image44.png)
+
+5.  Azureアカウントを選択し、**「Continue」**をクリックしてください。
+
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image45.png)
+
+    ![A screenshot of a computer error AI-generated content may be incorrect.](./media/image46.png)
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image47.png)
+
+6.  アプリケーションをローカルで実行します。
 
     +++dotnet run+++
 
     ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image48.png)
+incorrect.](./media/image48.png)
 
-7.  When you see that **your application running on port 5017 is
-    available**, select **Open in Browser.**
-
-    ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image49.png)
-
-    It will open the app in a browser.
-
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image50.png)
-
-8.  Enter the following prompt. If you get a response, your application
-    is connecting successfully to the Azure OpenAI resource.
-
-    +++What does Contoso do with my personal information?+++
-
-    ![A screenshot of a chat AI-generated content may be
-    incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image51.png)
-
-9.  Press **Ctrl+C** to terminate the running command. Next, deploy the
-    application using the following commands.
-
-    +++azd env set AZURE_RESOURCE_GROUP ResourceGroup2+++
-
-    +++azd up+++
-	
-	>[!Alert] When asked to create a new resource group, Select **Enter**.
-	> ( **ResourceGroup2** should be the default selection )
-	
-    ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image52.png)
-
-    >[!Note] It will take 5-10 mins to complete the deployment.
-
-## Task 5: Test the deployed RAG application
-
-With the application fully deployed and configured, you can now test the
-RAG functionality:
-
-1.  Open the application URL provided at the end of the deployment. When
-    the prompt appears asking, 'Do you want Code to open the external
-    website?', click **Open**.
+7.  **ポート5017で実行されているアプリケーションが利用可能になった(your
+    application running on port 5017 is
+    available)**ことを確認したら、**「Open in
+    Browser」**を選択してください。
 
     ![A screenshot of a computer AI-generated content may be
-    incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image53.png)
+incorrect.](./media/image49.png)
+
+    アプリがブラウザで開きます。
+
+    ![](./media/image50.png)
+
+8.  次のプロンプトを入力してください。応答があれば、アプリケーションはAzure
+    OpenAIリソースに正常に接続されています。
+
+    +++ What does Contoso do with my personal information?+++
+    
+    ![A screenshot of a chat AI-generated content may be incorrect.](./media/image51.png)
+
+9.  **Ctrl+C**を押してください。次に、以下のコマンドを使用してアプリケーションをデプロイします。
+
+    +++ azd up+++
 
     ![A screenshot of a computer AI-generated content may be
-    incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image54.png)
+    incorrect.](./media/image52.png)
 
-    You see a chat interface where you can enter questions about the content
-    of your uploaded documents.
+**注：**デプロイ完了まで5～10分かかります。
 
-    ![A screenshot of a chat AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image55.png)
+## タスク5：デプロイしたRAGアプリケーションをテストする
 
-2.  Ask the following questions:
+アプリケーションのデプロイと設定が完了したら、RAGの機能をテストできます。
 
-    +++How does Contoso use my personal data?+++
+1.  デプロイの最後に表示されるアプリケーションの URL を開きます。「'Do
+    you want Code to open the external
+    website?」というプロンプトが表示されたら、**「**Open**」**をクリックします。
 
-    +++How do you file a warranty claim?+++
+    ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image53.png)
 
-    Observe how the responses include citations that reference the source
-    documents. These citations help users verify the accuracy of the
-    information and find more details in the source material.
+    ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image54.png)
 
-    ![A screenshot of a chat AI-generated content may be
-    incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image56.png)
-
-    The pop-up appears when you click on the blue circles labelled 1 or 2,
-    positioned at the end of each line.
+    アップロードしたドキュメントの内容に関する質問を入力できるチャットインターフェースが表示されます。
 
     ![A screenshot of a chat AI-generated content may be
-    incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image57.png)
+incorrect.](./media/image55.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image58.png)
+2.  以下の質問をしてください。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image59.png)
+    +++**How does Contoso use my personal data?**+++
 
-## Summary
+    +++**How do you file a warranty claim?**+++
 
-In this lab, you provision Azure resources to build a RAG-based .NET
-Blazor web application integrating Azure OpenAI and Azure AI Search. You
-configure hybrid search with document indexing and embeddings to enable
-contextual Q&A with citations. The application is tested locally in
-GitHub Codespaces using managed identity for secure access. Finally,
-it’s deployed to Azure App Service and validated through a live chat
-interface powered by Azure AI.
+    回答には、出典となる文書を参照する引用が含まれていることに注目してください。これらの引用は、ユーザーが情報の正確性を確認し、出典資料からより詳細な情報を見つけるのに役立ちます。
 
+    ![A screenshot of a chat AI-generated content may be
+incorrect.](./media/image56.png)
 
+    各行の末尾にある、1または2とラベル付けされた青い丸をクリックすると、ポップアップが表示されます。
+
+    ![A screenshot of a chat AI-generated content may be
+incorrect.](./media/image57.png)
+
+    ![](./media/image58.png)
+
+    ![](./media/image59.png)
+
+## まとめ
+
+このラボでは、Azureリソースをプロビジョニングして、Azure OpenAIとAzure
+AI Searchを統合したRAGベースの.NET Blazor
+Webアプリケーションを構築します。ドキュメントのインデックス作成と埋め込み機能を備えたハイブリッド検索を構成し、引用を含むコンテキストに応じたQ&Aを実現します。アプリケーションは、マネージドIDを使用してGitHub
+Codespacesでローカルにテストされ、安全なアクセスが確保されます。最後に、Azure
+App Serviceにデプロイされ、Azure
+AIを搭載したライブチャットインターフェイスを通じて検証されます。
