@@ -1,372 +1,359 @@
-# Lab 1 - GitHub Copilot Modernization for Java - Migrate to Azure
+# ラボ1 - Java向けGitHub Copilotアプリの近代化 - Azureへの移行
 
-This lab walks through assessing and migrating the sample Java
-application **asset-manager** from AWS/RabbitMQ/Postgres to Azure Blob
-Storage, Azure Service Bus, and Azure Database for PostgreSQL using
-**GitHub Copilot Modernization for Java**.
+GitHub Copilot App Modernization for Java
+を活用し、サンプルJavaアプリケーション「asset-manager」を
+AWS/RabbitMQ/Postgres から Azure Blob Storage、Azure Service Bus、および
+Azure Database for PostgreSQL へと評価・移行する手順を解説するラボです。
 
-**Overview**
+概要
 
-This hands-on lab demonstrates **assessing** and **migrating** a **Java web + worker application** to **Azure** using **GitHub Copilot Modernization for Java**. 
+本ハンズオンラボでは、GitHub Copilot App Modernization for Java
+を使用して、Java Web + Worker アプリケーションを評価し、Azure
+へ移行する手順を実演します。本ラボは、各主要ステップの後に検証ポイントを設けた、小規模かつ集中的なタスク構成となっています。
 
-**GitHub Copilot Modernization for Java**, also referred to as App Modernization for Java or AppMod, assists with app assessment, planning and code remediation using a Visual Studio Code Extension and GitHub Copilot. It automates repetitive tasks, boosting developer confidence and speeding up the Azure migration and ongoing optimization.
+GitHub Copilot App Modernization for Java（通称：App Modernization for
+Java、または AppMod）は、Visual Studio Code 拡張機能および GitHub
+Copilot
+を活用し、アプリケーションの評価、計画策定、およびコードの修正作業を支援します。本ツールは反復的なタスクを自動化することで、開発者の自信を高め、Azure
+への移行作業やその後の継続的な最適化プロセスを加速させます。
 
-**About the Project**
+**プロジェクトについて**
 
-This application consists of two sub-modules, **Web** and **Worker**.
-Both of them contain functions of using storage service and message
-queue.
+**Web**と**Worker**という2つのサブモジュールで構成されています。どちらのモジュールにも、ストレージサービスとメッセージキューを使用する機能が含まれています。
 
-**Original Infrastructure**
+**元のインフラ**
 
-The project uses the following original infrastructure:
+このプロジェクトでは、以下の既存のインフラストラクチャを使用しています。
 
-- **AWS S3 for image storage**, using password-based authentication (access
-  key/secret key)
+- 画像の保存にはAWS
+  S3を使用し、パスワード認証（アクセスキー／シークレットキー）を利用します。
 
-- **RabbitMQ for message queuing**, using password-based authentication
+- パスワード認証を使用したメッセージキューイングのためのRabbitMQ
 
-- **PostgreSQL database** for metadata storage, using password-based
-  authentication
+- メタデータ保存用のPostgreSQLデータベース、パスワード認証を使用
 
-**Original Architecture**
+**オリジナルの建築**
 
-![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image1.png)
+![](./media/image1.png)
 
-**Expected infrastructure after migration**
+**移行後の想定されるインフラストラクチャ**
 
-After migration, the project will use the following Azure services
+移行後、プロジェクトでは以下のAzureサービスを使用します。
 
-- **Azure Blob Storage** for image storage, using managed identity
-  authentication
+- イメージ保存にはAzure Blob
+  Storageを使用し、マネージドID認証を使用する。
 
-- **Azure Service Bus for message queuing**, using managed identity
-  authentication
+- マネージドID認証を使用したメッセージキューイングのためのAzure Service
+  Bus
 
-- **Azure Database for PostgreSQL** for metadata storage, using managed
-  identity authentication
+- メタデータストレージには、マネージドID認証を使用するAzure Database for
+  PostgreSQLを使用します。
 
-**Migrated Architecture**
+**移行されたアーキテクチャ**
 
-Managed identity based authentication
+マネージドIDベース認証
 
-![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image2.png)
+![](./media/image2.png)
 
-## Prerequisites
+## 前提条件
 
-In order to execute this lab, you will need a **Github account** with **Github Copilot** enabled. If you do not have one, please create one form here -+++https://github.com/signup+++
+## このラボを実施するには、GitHub Copilotが有効化されたGitHubアカウントが必要です。アカウントをお持ちでない場合は、こちら（+++https://github.com/signup+++）から作成してください。
 
->[!Alert] **Important:** As we use AI, the results might vary a bit and might vary from the screenshots provided in this lab guide. There might be iterations required and it would differ for every individual's execution.
- 
-## Task 1: Install the GitHub Copilot Modernization extension
+## タスク 1: GitHub Copilot App Modernization 拡張機能をインストールする
 
-In this task, you will install the extension in the VS Code that is required for this lab execution.
+このタスクでは、このラボの実行に必要な拡張機能をVS
+Codeにインストールします。
 
-1.  Open the VS Code. Select **Extensions** from the left pane.
+1.  VS Codeを開きます。左側のペインから**「Extensions」**を選択します。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image3.png)
+    ![](./media/image3.png)
 
-2.  Search for and select +++GitHub Copilot modernization+++ and then select **Install**.
+2.  「+++GitHub Copilot app modernization+++」を検索して選択し、
+    **「Install」**を選択します。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image4.png)
+    ![](./media/image4.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image5.png)
+    ![](./media/image5.png)
 
-The GitHub Copilot Modernization extension is what will help in modernizing the apps easily.
+GitHub
+Copilotのアプリ近代化拡張機能は、アプリを簡単に近代化するのに役立ちます。
 
-## Task 2: Assess Your Java Application
+## タスク2：既存のアプリケーションを理解する
 
-In this task, you will use **GitHub Copilot for App Modernization** in Visual Studio Code to analyze an existing Java application and evaluate its readiness for modernization and cloud migration.
+既存のコードを読み解き、PostgreSQL、AWS、および
+RabbitMQの構成を理解してください。
 
-1.  Open VSCode and click on **Select Folder**.
+## タスク3：Javaアプリケーションを評価する
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image6.png)
+1.  **Cドライブから、LabfilesのZIP**ファイルを解凍します。
 
-2.  Select **GitHub-Copilot-App-Modernization-for-java** folder from
-    **C:\Labfile** and click on **Select folder**.
+2.  VSCodeを開き、 **「Select Folder」**をクリックします。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image7.png)
+    ![](./media/image6.png)
 
-3.  Once the folder opens, select **Yes, I trust the authors** option.
+3.  **C:\Labfile**から**GitHub-Copilot-App-Modernization-for-java**フォルダーを選択し、
+    **\[Select folder\]**をクリックします。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image8.png)
+    ![](./media/image7.png)
 
-4.  Go through the existing code to understand the configuration of PostgreSQL, AWS and RabbitMQ.
+4.  フォルダが開いたら、 **「Yes, I trust the
+    authors**」を選択してください。
 
-5.  At the right bottom of VSCode, you can see the GitHub Copilot icon.
+    ![](./media/image8.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image9.png)
+5.  VS Codeの右下隅に、GitHub Copilotのアイコンが表示されます。
 
-6.  Select the **Continue with GitHub** option.
+    ![](./media/image9.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image10.png)
+6.  **「Continue with GitHub」**オプションを選択してください。
 
-7.  Login using your **GitHub id** and **Authorize Visual Studio Code**.
+    ![](./media/image10.png)
 
-8.  You can now see that the GitHub Copilot is enabled.
+7.  **GitHub ID**を使用してログインし、 **Visual Studio Code
+    を承認**してください。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image11.png)
+8.  これでGitHub Copilotが有効になっていることが確認できます。
 
-9.  From the left pane, select the **extension** – **GitHub Copilot for
-    App Modernization**.
+    ![](./media/image11.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image12.png)
+9.  左側のペインから、**拡張機能**「 **GitHub Copilot for App
+    Modernization」**を選択します。
 
-10. Select the drop down next to Auto in the GitHub chat to select the
-    model. **Claude Sonnet 4.5** works best for App modernization. If
-    you have a premium GitHub license, you can select that. Else, you
-    can select **Claude Haiku 4.5**.
+    ![](./media/image12.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image13.png)
+10. GitHubチャットの「Auto」の横にあるドロップダウンを選択して、モデルを選択してください。アプリの近代化には、
+    **Claude Sonnet
+    4.5**が最適です。GitHubのプレミアムライセンスをお持ちの場合は、それを選択できます。そうでない場合は、
+    **Claude Haiku 4.5**を選択してください。
 
-11. From the Quick Start section of GitHub Copilot Modernization,
-    select **Start Assessment**.
+    ![](./media/image13.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image14.png)
+11. GitHub Copilot App Modernization のクイックスタートセクションから、
+    **\[Start Assessment\]**を選択します。
 
-12. If you get an option to select "how you want to assess", select **Recommended assessment**.
+    ![](./media/image14.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image63.png)
+12. 評価の進捗状況を確認してください。
 
+    ![](./media/image15.png)
 
-12. Check the progress of the assessment.
+13. 評価は段階的に開始され、進行していくことがわかります。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image15.png)
+    ![](./media/image16.png)
 
-13. You can see that the assessment starts and proceeds gradually.
+    ![](./media/image17.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image16.png)
+14. 完了までには約5分かかります。完了すると、以下のスクリーンショットのように**Assessment
+    Report**が表示されます。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image17.png)
+「**Application
+Information」**セクションには、申請に関する基本情報が記載されています。
 
-14. This takes around 5 minutes to complete. Once done, the **Assessment
-    Report** is displayed as in the screenshot below.
+    ![](./media/image18.png)
 
-    The **Application Information** section lists the basic information
-about the application.
+15. 「**Issue Summary**」セクションでは、課題を「**Cloud
+    Readiness**と「**Java
+    Upgrade**」の2つのカテゴリに分類して記載しています。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image18.png)
+    ![](./media/image19.png)
 
-15. The **Issue Summary** section lists down the issues in 2 categories
-    **– Cloud Readiness** and **Java Upgrade**.
+16. 下にスクロールして、問題の詳細を確認してください。この場合、**Cloud
+    Readiness category**
+    **9件の問題**がありますが、Javaアップグレードカテゴリには問題がありません。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image19.png)
+    ![](./media/image20.png)
 
-16. Scroll down to see the details on the issues. You will see the **issues** under the **Cloud Readiness category** and there are
-    none under Java Upgrade category.
+17. 各セクションを展開して、問題点とその解決策を確認してください。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image20.png)
+18. 最初の問題は**Database
+    Migration（PostgreSQL）**に関するもので、**解決策(Solution)**は**Azure
+    Database for PostgreSQL**に移行することです**。**
 
-17. Expand each section to see what the issue is and how it can be
-    resolved.
+    ![](./media/image21.png)
 
-18. First issue is on the **Database Migration (PostgreSQL)** and the
-    **Solution** is to migrate to **Azure Database for PostgreSQL**
+19. PostgreSQLデータベースの検出オプションをさらに確認すると、影響を受けたファイルの数と詳細な説明が表示されます。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image21.png)
+    ![](./media/image22.png)
 
-19. When you further check the PostgreSQL database found option, you
-    will see how many files are impacted and also a detailed
-    explanation.
+20. 次はMessaging Service Migration（Spring AMQP Rabbit MQ）です。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image22.png)
+    ![](./media/image23.png)
 
-20. The next one is Messaging Service Migration (Spring AMQP Rabbit MQ)
+21. **Spring RabbitMQ usage found
+    in**を展開して、その詳細を理解してください。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image23.png)
+    ![](./media/image24.png)
 
-21. Expand **Spring RabbitMQ usage found in code** to understand the
-    details under that.
+22. **Spring AMQP
+    dependency**を展開すると、影響を受けるファイルとその詳細が表示されます。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image24.png)
+        ![](./media/image25.png)
 
-22. Expand **Spring AMQP dependency** found to see the files affected
-    and the details of them.
+23. **RabbitMQ connection string, username or password found in
+    configuration file**を展開します。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image25.png)
+    ![](./media/image26.png)
 
-23. Expand **RabbitMQ connection string, username or password found in
-    configuration file**
+24. 次の課題は**Storage Migration（AWS
+    S3）**であり、その解決策は**Migrate from AWS S3 to Azure Blob
+    Storage**です。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image26.png)
+    ![](./media/image27.png)
 
-24. The next issue is the **Storage Migration (AWS S3)** to which the
-    solution is **Migrate from AWS S3 to Azure Blob Storage**.
+25. **AWS S3 usage found**を展開すると、詳細が表示されます。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image27.png)
+    ![](./media/image28.png)
 
-25. Expand **AWS S3 usage found** to view the details.
+    ![](./media/image29.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image28.png)
+26. **AWS S3 dependency usage found**を展開すると、詳細が表示されます。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image29.png)
+    ![](./media/image30.png)
 
-26. Expand **AWS S3 dependency usage found** to view the details.
+## タスク4：Azure Database for PostgreSQL Flexible Serverへの 移行
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image30.png)
+1.  **Database Migration**から始めます。Assessment
+    Reportの「Issues」→「Issue Category」に表示されている「Database
+    Migration（ PostgreSQL）」課題に対して、 **「Run
+    Task」**を選択してください。
 
-## Task 3: Migrate to Azure Database for PostgreSQL Flexible Server
+    ![](./media/image31.png)
 
-In this task, you will use **GitHub Copilot for App Modernization** to migrate the application’s database configuration from **PostgreSQL** to **Azure Database for PostgreSQL** – Flexible Server.
+2.  タスクが開始され、詳細がチャットウィンドウに表示されます。
 
-1.  We will start with the **Database Migration**. Select **Run Task**
-    against the Database Migration(PostgreSQL) issue that is listed
-    under **Issues** -> **Issue Category** in the Assessment Report.
+    ![](./media/image32.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image31.png)
+3.  タスクが進行するにつれて、GitHub Copilot
+    はまず実行**計画を立て、**次に適切な**ファイルへの変更**を**開始します**。各**アクションは**チャット**ウィンドウ**に表示されます。**ファイル**に**変更**が加えられると、詳細が表示され、変更を**保持するか破棄するかを**ユーザーに**確認するよう求められます。**また、確認が必要な箇所では、続行するかどうかをユーザーに確認するよう求められます**。
+    「Continue」**をクリックした場合のみ、処理が続行されます。
 
-2.  The task will start and the details will get populated in the chat
-    window.
+    ![](./media/image33.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image32.png)
+    ![](./media/image34.png)
 
-3.  As the task continues, the GitHub Copilot first **plans** the
-    **execution** and then **starts** making **changes** to the
-    appropriate **files**. Each **action** is described in the **chat**
-    window. As it makes **changes** to the **files**, the details are
-    populated and asks for **confirmation** from the user to **keep**
-    the changes or **discard** them. Also, at places where confirmation
-    is required, it asks for the user confirmation to continue. Only if
-    you click on **Continue**, it will proceed.
+4.  チャットに表示されるファイル名を選択して開いてください。追加の場合は緑色、削除の場合は赤色で色分けされています。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image33.png)
+5.  変更内容をよく確認し、理解した上で、変更内容を反映させるためにファイルを**保存(keep)**し続けてください。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image34.png)
+    ![](./media/image35.png)
 
-4.  Select the file name that gets listed in the chat, to open it. The
-    file has got green color code for addition and red for deletion.
+    ![](./media/image36.png)
 
-5.  Ensure to go through the changes, understand and then continue to
-    **keep** the file to have the changes.
+    ![](./media/image37.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image35.png)
+6.  下のスクリーンショットで、AWSの設定が削除され、Azure Storage
+    Blobが追加されていることが確認できます。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image36.png)
+    ![](./media/image38.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image37.png)
+    ![](./media/image39.png)
 
-6.  In the below screenshot, you can see that the Aws configuration are
-    removed and the Azure Storage blob is added.
+7.  各ファイルを確認し、
+    **「Keep」**をクリックしてください。プロンプトが表示されたら、
+    **「Continue」**を選択してください。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image38.png)
+    ![](./media/image40.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image39.png)
+    ![](./media/image41.png)
 
-7.  Review each file and click **Keep**. Then select **Continue** if
-    prompted.
+    ![](./media/image42.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image40.png)
+    ![](./media/image43.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image41.png)
+    ![](./media/image44.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image42.png)
+    ![](./media/image45.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image43.png)
+    ![](./media/image46.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image44.png)
+8.  「**Todos」**セクションには、作成したプランの進捗状況と、完了済みおよび終了済みの項目数が表示されます。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image45.png)
+    ![](./media/image47.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image46.png)
+    ![](./media/image48.png)
 
-8.  The **Todos** section shows the progress on the created plan and the
-    status on how many are finished and how many are completed.
+    ![](./media/image49.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image47.png)
+    ![](./media/image50.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image48.png)
+    ![](./media/image51.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image49.png)
+    ![](./media/image52.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image50.png)
+    ![](./media/image53.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image51.png)
+    ![](./media/image54.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image52.png)
+    ![](./media/image55.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image53.png)
+9.  最初のタスクが完了し、**Migration
+    compete**メッセージが表示されました。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image54.png)
+    ![](./media/image56.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image55.png)
+10. また、概要(Summary)ファイルはプロジェクトに保存されます。
 
-9.  The first task is complete and it shows a **Migration compete**
-    message.
+    ![](./media/image57.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image56.png)
+## タスク5： AWS S3からAzure Blob Storageへの移行
 
-10. Also , the Summary file is saved in the project.
+次に、AWS S3からAzure Blob Storageへの移行プロセスを開始します。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image57.png)
+1.  **「Storage Migration（AWS S3）」**の課題に対して「Run
+    Task」を選択してください。
 
-## Task 4: Migrate from AWS S3 to Azure Blob Storage
+    ![](./media/image58.png)
 
-Next, you will start the migration process of AWS S3 to Azure Blob Storage.
+2. GitHub Copilot は、kbId「s3-to-azure-blob-storage」を指定して
+#appmod-run-task を実行します。
 
-1.  Select Run Task against the issue **Storage Migration (AWS S3).**
+    ![](./media/image59.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image58.png)
+3.  GHCPは引き続き、MCPサーバーを使用して appmod-run-task、appmod-fetch-knowledgebase、appmod-search-file、およびその他のタスクを実行します。各ステップの実行中、画面にプロンプトが表示された場合は、手動で「Continue」を繰り返しクリックし、許可・確認を行って処理を進め  てください。Copilot Agentは、アプリケーションのモダナイゼーションを支援するために様々なツールを使用します。各ツールの使用にあたっては、「 Continue」ボタンをクリックして確認を行う必要がある場合があります。
 
-2.  GitHub Copilot runs \#appmod-run-task by kbId:
-    s3-to-azure-blob-storage.
+4.  提案されたコード変更内容を確認し、「Keep」をクリックして適用してください。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image59.png)
+    ![](./media/image60.png)
 
-3.  GHCP will continue to run appmod-run-task,
-    appmod-fetch-knowledgebase,appmod-search-file and other tasks using
-    the MCP Server. During each step, please manually click **Continue**
-    repeatedly to allow, confirm and proceed if prompted. The Copilot
-    Agent uses various tools to facilitate application modernization.
-    Each tool's usage might require confirmation by clicking the
-    Continue button.
+5.  これが完了したら、次のタスクに進むことができます。
 
-4.  Review the proposed code changes and click Keep to apply them.
+## タスク6：AMQP RabbitMQからAzure Service Busへの移行
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image60.png)
+    アプリケーション資産管理ツールは、メッセージキューイングにSpring AMQPとRabbitMQを使用しています。代わりにAzure Service Busに移行しましょう。
 
-5.  Once this is completed, you can move to the next task.
+1.  このワークショップでは、**Messaging Service
+    Migration**について見ていきます。**Migrate from AMQP RabbitMQ to
+    Azure Service Bus**を行います。
 
-## Task 5: Migrate from AMQP RabbitMQ to Azure Service Bus
+    ![](./media/image61.png)
 
-The Application asset-manager uses Spring AMQP with RabbitMQ for message queuing. Let's move to Azure Service Bus instead.
+2.「Run Task」をクリックします。
 
-1.  For this part of the workshop, we will take a look at
-    the **Messaging Service Migration**. We will **Migrate from AMQP
-    RabbitMQ to Azure Service Bus**.
+    ![](./media/image62.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image61.png)
+3.  GitHub Copilot は、kbId「amqp-rabbitmq-servicebus」を指定して
+    #appmod-run-task を実行します。
 
-6.  Click **Run Task**.
+4.  GHCP は、MCP Server
+    を使用して、appmod-run-task、appmod-fetch-knowledgebase、appmod-search-file、およびその他のタスクの実行を継続します。各ステップの進行中、処理の許可、確認、および続行を行うため、手動で「**Continue**」をクリックし続けてください。Copilot
+    Agent
+    は、アプリケーションのモダナイゼーションを支援するために様々なツールを使用します。各ツールの使用には、「Continue」ボタンをクリックすることによる確認が必要です。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image62.png)
+5.  提案されたコード変更を確認し、
+    **「Keep」**をクリックしてください。 それらを適用する。
 
-7.  GitHub Copilot runs #appmod-run-task by kbId:
-    amqp-rabbitmq-servicebus
+    これらの作業が完了すると、コード内のすべての更新内容を確認できるようになります。
 
-8.  GHCP will continue to
-    run appmod-run-task, appmod-fetch-knowledgebase,appmod-search-file and
-    other tasks using the MCP Server. During each step, please manually
-    click **Continue** repeatedly to allow, confirm and proceed. The
-    Copilot Agent uses various tools to facilitate application
-    modernization. Each tool's usage requires confirmation by clicking
-    the Continue button.
+    Azureにデプロイする準備が整った移行済みのコード全体は、こちらから入手できます -
+    **C:\Labfiles\\ java-migration-copilot-samples-expected**
+    を参照してください。コードを確認すると、元のコードと比較して、AWS
+    S3、RabbitMQ、PostgreSQL
+    データベースへのすべての参照が明確に削除され、それぞれ Azure Blob
+    Storage、Azure Service Bus、Azure Database for PostgreSQL
+    に置き換えられていることがわかります。
 
-9.  Review the proposed code changes and click **Keep** to apply them.
+## まとめ
 
-Once these are completed, you should be able to see all the updates in
-your code.
+- 自動評価を実行し、データベース、ストレージ、メッセージングに関してCopilotが生成した移行を適用しました。
 
-The complete migrated code ready to be deployed to Azure is available
-here - **C:\Labfiles\java-migration-copilot-samples-expected**. Go
-through the code and as against the original code, you can see that all
-the references to AWS S3, RabbitMQ and PostgreSQL database are clearly
-removed and replaced with Azure Blob Storage, Azure Service Bus and
-Azure Database for PostgreSQL correspondingly.
-
-## Summary
-
-- You ran an automated assessment and applied Copilot-generated
-  migrations for database, storage, and messaging.
-
-- You reviewed and accepted the generated code changes and migration
-  summary.
+- 生成されたコード変更と移行概要を確認し、承認しました。
