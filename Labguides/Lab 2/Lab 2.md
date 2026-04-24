@@ -1,93 +1,88 @@
-# Lab 2 - Enhance an existing ASP.NET app to an agentic app on Azure
+# ラボ2 - 既存のASP.NETアプリをAzure上のエージェントアプリに拡張する
 
-This lab demonstrates how to add agentic capability to an existing
-data-driven ASP.NET Core CRUD application. It does this using Microsoft
-Agent Framework
+このラボでは、既存のデータ駆動型 ASP.NET Core CRUD
+アプリケーションにエージェント機能を追加する方法を説明します。この方法は、Microsoft
+Agent Framework を使用します。
 
-If your web application already has useful features, like shopping,
-hotel booking, or data management, it's relatively straightforward to
-add agent functionality to your web application by wrapping those
-functionalities as tools. In this lab, you start with a simple to-do
-list app. By the end, you'll be able to create, update, and manage tasks
-with an agent in an App Service app.
+ウェブアプリケーションにショッピング、ホテル予約、データ管理などの便利な機能が既に備わっている場合、それらの機能をツールとしてラップすることで、エージェント機能をウェブアプリケーションに追加するのは比較的簡単です。このラボでは、まずシンプルなToDoリストアプリから始めます。最終的には、App
+Serviceアプリでエージェントを使用してタスクを作成、更新、管理できるようになります。
 
-**Duration** - 50 minutes
+## タスク 1: ASP.NET アプリケーションをローカルで実行する
 
-## Task 1: Execute the ASP.NET app locally
+この演習では、アプリケーションをローカルシステム上で実行します。
 
-In this exercise, you will execute the application in the local system.
+1.  **C**ドライブから、**Labfilesのzip**ファイルを解凍します。
 
-1.  Open VS Code. Select **Open Folder**.
+2.  VS Code を開きます。 **\[Open Folder\]**を選択します。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image1.png)
+    ![](./media/image1.png)
 
-2.  Select **app-service-agentic-semantic-kernel-ai-foundry-agent-main**
-    folder from **C:/Labfiles**.
+3.  **C:/Labfiles**から**app-service-agentic-semantic-kernel-ai-foundry-agent-main**フォルダーを選択します。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image2.png)
+    ![](./media/image2.png)
 
-3.  Select **Yes, I trust the authors** in the pop up.
+4.  ポップアップ画面で**「Yes, I trust the
+    authors」**を選択してください。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image3.png)
+    ![](./media/image3.png)
 
-4.  Select the 3 dots in the top menu. Select **Terminal** -\> **New
-    Terminal** to open the VSCode terminal and execute the app.
+5.  上部メニューの3つの点を選択します。 **「Terminal」** → **「New
+    Terminal」**を選択してVS
+    Codeのターミナルを開き、アプリを実行します。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image4.png)
+    ![](./media/image4.png)
 
-5.  Once opened, execute the below command in the terminal to install
-    the NuGet package Microsoft.Agents.AI of the specified version into
-    the current project.
+6.  開いたら、ターミナルで以下のコマンドを実行して、指定したバージョンの
+    NuGet パッケージ Microsoft.Agents.AI
+    を現在のプロジェクトにインストールします。
 
-    +++dotnet add package Microsoft.Agents.AI --version 1.0.0-preview.251204.1+++
+    +++dotnet add package Microsoft.Agents.AI --version
+1.0.0-preview.251204.1+++
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image5.png)
+    ![](./media/image5.png)
 
-6.  Next, execute the command +++dotnet build+++ to build the project.
+7.  次に、コマンド +++dotnet build+++
+    を実行してプロジェクトをビルドします。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image6.png)
+    ![](./media/image6.png)
 
-7.  Next, execute the command +++dotnet run+++ to execute the project.
+8.  次に、コマンド「+++dotnet
+    run+++」を実行してプロジェクトを実行します。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image7.png)
+    ![](./media/image7.png)
 
-8.  Once the command gets executed, open a browser and open
-    +++http://localhost:5280+++
+9.  コマンドが実行されたら、ブラウザを開いて +++http://localhost:5280+++にアクセスしてください。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image8.png)
+    ![](./media/image8.png)
 
-9. Select the Microsoft Agent Framework option from the left and you
-    can see that you get a message that it is not configured. We will
-    update it later in this lab.
+10. 左側のメニューから「Microsoft Agent
+    Framework」を選択すると、「構成されていません」というメッセージが表示されます。この設定は、この実習の後半で更新します。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image9.png)
+    ![](./media/image9.png)
 
-10. Press Ctrl+C in the VS Code terminal in order to stop the
-    application.
+11. アプリケーションを停止するには、 VS
+    CodeのターミナルでCtrl+Cを押してください。
 
-## Review the agent code
+## エージェントコードを確認してください
 
-The agent is initialized as a service (in Program.cs) in a provider and
-injected into the respective Blazor component.
+エージェントはプロバイダー内のサービスとして初期化され（
+Program.cs内）、それぞれのBlazorコンポーネントに注入されます。
 
-The AgentFrameworkProvider is initialized
-in *Services/AgentFrameworkProvider.cs*. The initialization code does
-the following:
+AgentFrameworkProviderは*Services/
+AgentFrameworkProvider.cs*で初期化されます。初期化コードでは以下の処理が行われます。
 
-- Creates an IChatClient from Azure OpenAI using the AzureOpenAIClient.
+- AzureOpenAIClientを使用して、Azure OpenAI
+  からIChatClientを作成します。
 
-- Gets the TaskCrudTool instance that encapsulates the functionality of
-  the CRUD application (in *Tools/TaskCrudTool.cs*).
-  The Description attributes on the tool methods help the agent
-  determine how to call them.
+- CRUDアプリケーションの機能をカプセル化したTaskCrudToolインスタンスを取得します（
+  *Tools/
+  TaskCrudTool.cs内*）。ツールメソッドのDescription属性は、エージェントがメソッドの呼び出し方法を判断するのに役立ちます。
 
-- Creates an AI agent using CreateAIAgent() with instructions and tools
-  registered via AIFunctionFactory.Create().
+- CreateAIAgent () を使用して、 AIFunctionFactory.Create
+  ()で登録された指示とツールを使用してAI エージェントを作成します。
 
-- Creates a thread for the agent to persist conversation across
-  navigation.
+- エージェントがナビゲーションをまたいで会話を継続するためのスレッドを作成します。
 
-```no-copy
 // Create IChatClient
 IChatClient chatClient = new AzureOpenAIClient(
         new Uri(endpoint),
@@ -117,229 +112,238 @@ var agent = chatClient.CreateAIAgent(
 var thread = agent.GetNewThread();
 
 return (agent, thread);
-```
 
-Each time the user sends a message, the Blazor component
-(in *Components/Pages/AgentFrameworkAgent.razor*)
-calls Agent.RunAsync() with the user input and the agent thread. The
-agent thread keeps track of the chat history.
 
-var response = await this.Agent.RunAsync(sentInput, this.agentThread);
+ユーザーがメッセージを送信するたびに、Blazorコンポーネント（
+*Components/Pages/
+AgentFrameworkAgent.razor内*）は、ユーザー入力とエージェントスレッドを引数としてAgent.RunAsync
+()を呼び出します。エージェントスレッドはチャット履歴を管理します。
 
-## Task 2: Deploy the sample application
+var response = await this.Agent.RunAsync ( sentInput , this.agentThread
+);
 
-The sample contains an Azure Developer CLI (AZD) template, which creates
-an App Service app with managed identity and deploys your sample
-application.
+## タスク2：サンプルアプリケーションをデプロイする
 
-1.  In the terminal, execute the command +++az login+++
+このサンプルには、マネージドIDを使用してApp
+Serviceアプリを作成し、サンプルアプリケーションをデプロイするAzure
+Developer CLI（AZD）テンプレートが含まれています。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image10.png)
+1.  ターミナルで、コマンド「+++ az login+++」を実行します。
 
-2.  Select Work or school account.
+    ![](./media/image10.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image11.png)
+2.  Work or school accountを選択してください。
 
-3.  Login using your login credentials
+    ![](./media/image11.png)
 
-    - Username - +++@lab.CloudPortalCredential(User1).Username+++
+3.  ログイン情報を使用してログインしてください
 
-    - TAP - +++@lab.CloudPortalCredential(User1).AccessToken+++
+    - ユーザー名 - +++@ lab.CloudPortalCredential (User1).Username+++
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image12.png)
+    - パスワード - +++@ lab.CloudPortalCredential (User1).Password+++
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image13.png)
+    ![](./media/image12.png)
 
-4.  Select **No, this app only**.
+    ![](./media/image13.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image14.png)
+4.  **「No, this app only」**を選択してください。
 
-5.  Select **Enter** to accept the subscription.
+    ![](./media/image14.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image15.png)
+5.  **Enter**キーを押して、サブスクリプションを承認します。
 
-6.  As the next step, execute the command, +++azd auth login+++ and
-    ensure that you are logged in.
+    ![](./media/image15.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image16.png)
+6.  次のステップとして、コマンド「+++ azd auth
+    login+++」を実行し、ログインしていることを確認してください。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image17.png)
+    ![](./media/image16.png)
 
-7.  Once this is done, execute +++azd up+++ to deploy the resources.
+    ![](./media/image17.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image18.png)
+7.  これが完了したら、+++ azd up+++ を実行してリソースをデプロイします。
 
-8.  Enter the environment name as +++envt@lab.LabInstance.Id+++
+    ![](./media/image18.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image19.png)
+8.  エンビロンメント名を+++envt@lab.LabInstance.Id+++の形式で入力してください。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image20.png)
+    ![](./media/image19.png)
 
-9.  Select the subscription. Press **Enter** to do so since you will
-    have only one subscription listed.
+    ![](./media/image20.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image21.png)
+9.  サブスクリプションを選択します。表示されるサブスクリプションは1つのみですので、**Enter**キーを押して選択してください。
 
-10. Move your arrow key and select **ResourceGroup1** as the Resource
-    group.
+    ![](./media/image21.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image22.png)
+10. 矢印キーを使って、Resource
+    groupとして**「ResourceGroup1」**を選択してください。
 
-11. The resources will get created and it will take around 10 minutes to
-    complete.
+    ![](./media/image22.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image23.png)
+11. リソースが作成され、完了までには約10分かかります。
 
-12. Once completed, the **endpoint** is listed in the terminal.
+    ![](./media/image23.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image24.png)
+12. 処理が完了すると、**エンドポイント(Endpoint)**がターミナルに表示されます。
 
-13. Open the endpoint url to access the application from Azure.
+    ![](./media/image24.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image25.png)
+13. Azureからアプリケーションにアクセスするには、エンドポイントURLを開いてください。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image26.png)
+    ![](./media/image25.png)
 
-## Task 3: Create and configure the Microsoft Foundry resource
+    ![](./media/image26.png)
 
-In this exercise, you will create the Microsoft Foundry resource and
-deploy a model to be used.
+    ![](./media/image27.png)
 
-1.  Open +++https://ai.azure.com+++ and sign in using your credentials.
-    Ensure that the top **New Foundry** radio button is set to active.
+    ![](./media/image28.png)
 
-    - Username - +++@lab.CloudPortalCredential(User1).Username+++
+## タスク3: Microsoft Foundry リソースの作成と構成
 
-    - TAP - +++@lab.CloudPortalCredential(User1).AccessToken+++
+この演習では、Microsoft Foundry
+リソースを作成し、使用するモデルをデプロイします。
 
-2.  In the Select a project to continue dialog, select **Create a new
-    project**.
+1.  https://ai.azure.com
+    にアクセスし、認証情報を使用してサインインしてください。一番上の**「New
+    Foundry」**ラジオボタンが有効になっていることを確認してください。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image29.png)
+    - ユーザー名 - +++@ lab.CloudPortalCredential (User1).Username+++
 
-3.  Enter the project name as +++proj@lab.LabInstance.Id+++, select
-    the Resource group as **ResourceGroup1** and then select **Create**.
+    - パスワード - +++@lab.CloudPortalCredential(User1).Password+++
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image30.png)
+2.  「Select a project to continue」ダイアログで、「**Create a new
+    project」**を選択します。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image31.png)
+    ![](./media/image29.png)
 
-4.  Switch back to **Old Foundry**. From the Overview page, select Azure
-    OpenAI, copy the endpoint value and save it in a notepad.
+3.  プロジェクト名を<+++proj@lab.LabInstance.Id> +++ と入力し、Resource
+    groupを**ResourceGroup1**として選択してから、
+    **\[Create\]**を選択します。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image32.png)
+    ![](./media/image30.png)
 
-5.  Select Models + endpoints from the left pane. Select **+ Deploy
-    model** -> **Deploy base model**.
+    ![](./media/image31.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image33.png)
+4.  **Old Foundry**に戻ります。OverviewページからAzure
+    OpenAIを選択し、エンドポイントの値をコピーしてメモ帳に保存します。
 
-6.  Select gpt-4.1 and click on **Confirm**.
+    ![](./media/image32.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image34.png)
+5.  左側のペインから「Models + endpoints」を選択します。 **「+ Deploy
+    model** -\> **Deploy base model」**を選択します。
 
-7.  Click on **Deploy**.
+    ![](./media/image33.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image35.png)
+6.  gpt-4.1を選択し、**「Confirm」**をクリックします。
 
-8.  Copy and paste the model name to the notepad.
+    ![](./media/image34.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image36.png)
+7.  **「Deploy」**をクリックしてください。
 
-## Task 4: Assign required permissions
+    ![](./media/image35.png)
 
-In this exercise, you will assign the required permissions to the
-Foundry resource.
+8.  モデル名をコピーしてメモ帳に貼り付けてください。
 
-1.  Open +++https://portal.azure.com+++ and login using your credentials
-    if prompted. Select **Foundry** from the Home page.
+    ![](./media/image36.png)
 
-    - Username - +++@lab.CloudPortalCredential(User1).Username+++
+## タスク4：必要な権限を割り当てる
 
-    - TAP - +++@lab.CloudPortalCredential(User1).AccessToken+++
+この演習では、Foundryリソースに必要な権限を割り当てます。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image37.png)
+1.  https://portal.azure.com
+    にアクセスし、必要に応じて認証情報を使用してログインしてください。ホーム画面から**Foundry**を選択してください。
 
-1.  Select the Foundry resource that you created in the last task.
+    - ユーザー名 - +++@ lab.CloudPortalCredential (User1).Username+++
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image38.png)
+    - パスワード - +++@ lab.CloudPortalCredential (User1).Password+++
 
-2.  Select **Access control (IAM)** from the left pane.
+    ![](./media/image37.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image39.png)
+1.  前回のタスクで作成したFoundryリソースを選択してください。
 
-3.  Select **+ Add** -\> **Add role assignment**.
+    ![](./media/image38.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image40.png)
+2.  左側のペインから**「Access control（IAM）」**を選択します。
 
-4.  Search for and select +++Cognitive Services OpenAI User+++.
+    ![](./media/image39.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image41.png)
+3.  **「+ Add** -\> **Add role assignment」**を選択します。
 
-5.  Select **Next** to move ahead.
+    ![](./media/image40.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image42.png)
+4.  「+++Cognitive Services OpenAI User+++」を検索して選択します。
 
-6.  Select **Managed identity** and then select **Select members**.
+    ![](./media/image41.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image43.png)
+5.  **「Next」**を選択して次に進んでください。
 
-7.  Select **Managed identity** as **Foundry project** and then select
-    the proj@lab.LabInstance.Id.
+    ![](./media/image42.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image44.png)
+6.  **「Managed identity」**を選択し、次に**「Select
+    members」**を選択します。
 
-8.  Select **Review + assign** in the next two screens.
+    ![](./media/image43.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image45.png)
+7.  **Foundry project**として**Managed
+    identity**を選択し、次にproj@lab.LabInstance.Idを選択します。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image46.png)
+    ![](./media/image44.png)
 
-## Task 5: Configure connection variables in your sample application
+8.  次の2つの画面で**「Review + assign」**を選択してください。
 
-In this task, you will configure your sample application with the
-connection variables.
+    ![](./media/image45.png)
 
-1.  From VS Code, open **appsettings.json**. Using the values you copied
-    earlier from the Foundry portal, configure the following variables.
+    ![](./media/image46.png)
 
-    - AzureOpenAIEndpoint - Azure OpenAI endpoint (copied from the classic
-    Foundry portal).
+## タスク5：サンプルアプリケーションで接続変数を設定する
 
-    - ModelDeployment - Model name in the deployment (copied from the model
-    playground).
+このタスクでは、接続変数を使用してサンプルアプリケーションを設定します。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image47.png)
+1.  VS Code から*appsettings.jsonを開きます*。Foundry
+    ポータルから先ほどコピーした値を使用して、以下の変数を設定します。
 
-2.  From the terminal execute +++dotnet run+++
+    - AzureOpenAIEndpoint - Azure
+    OpenAIエンドポイント（従来のFoundryポータルからコピー）。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image48.png)
+    - ModelDeployment -
+    デプロイメント内のモデル名（モデルプレイグラウンドからコピー）。
 
-3.  Open a browser and navigate to +++localhost:5280+++
+    ![](./media/image47.png)
 
-	>[!Alert] It can take up to **10 minutes** for the localhost address to finish building. 
+2.  ターミナルから+++dotnet run+++を実行します。
 
-4.  Add few tasks in the app.
+    ![](./media/image48.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image49.png)
+3.  ブラウザを開き、+++localhost:5802+++ にアクセスしてください。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image50.png)
+4.  アプリにタスクをいくつか追加してください。
 
-5.  Now, select **Microsoft Agent Framework** from the left pane and you
-    can see that the chat opens up.
+    ![](./media/image49.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image51.png)
+    ![](./media/image50.png)
 
-6.  Enter +++Hi+++ or any message like +++What are my current tasks+++ and get
-    the response from the agent.
+5.  **「Microsoft Agent Framework」**を選択すると、チャットが開きます。
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image52.png)
+    ![](./media/image51.png)
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image53.png)
+6.  「Hi」または「+++ What are my current
+    tasks+++」のようなメッセージを入力して、エージェントからの応答を受け取ります。
 
+    ![](./media/image52.png)
 
-## Summary
+    ![](./media/image53.png)
 
-In this lab, you have taken a simple .NET app and learnt to induce AI
-into it.
+7.  それでは、+++ azd up+++
+    を実行してアプリの変更をデプロイしてください。
 
+    ![](./media/image54.png)
+
+    ![](./media/image55.png)
+
+8.  エンドポイントを開いて、Azure でアプリを表示します。
+
+    ![](./media/image56.png)
+
+## まとめ
+
+この実習では、シンプルな.NETアプリケーションを取り上げ、そこにAIを組み込む方法を学びました。
