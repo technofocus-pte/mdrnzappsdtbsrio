@@ -1,3 +1,16 @@
+---
+lab:
+  title: Lab 2 - Enhance an existing ASP.NET app to an agentic app on Azure
+  description: In this lab, you have taken a simple .NET app and learnt to induce AI into it.
+  duration: 50 minutes
+  level: 200
+  islab: true
+  primarytopics:
+    - .NET
+    - ASP.NET
+    - Azure
+---
+
 # Lab 2 - Enhance an existing ASP.NET app to an agentic app on Azure
 
 This lab demonstrates how to add agentic capability to an existing
