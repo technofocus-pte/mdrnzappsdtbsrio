@@ -1,3 +1,18 @@
+---
+lab:
+  title: Lab 3 - Build a RAG application using Azure OpenAI and Azure AI Search and deploy to Azure App Service
+  description: In this lab, you provision Azure resources to build a RAG-based .NET Blazor web application integrating Azure OpenAI and Azure AI Search. You configure hybrid search with document indexing and embeddings to enable contextual Q&A with citations. The application is tested locally in GitHub Codespaces using managed identity for secure access. Finally, it’s deployed to Azure App Service and validated through a live chat interface powered by Azure AI.
+  duration: 50 minutes
+  level: 400
+  islab: true
+  primarytopics:
+    - .NET
+    - Blazor
+    - Azure
+    - Azure App Service
+    - GitHub
+---
+
 # Lab 3 - Build a RAG application using Azure OpenAI and Azure AI Search and deploy to Azure App Service
 
 **Time Duration: 50 mins**

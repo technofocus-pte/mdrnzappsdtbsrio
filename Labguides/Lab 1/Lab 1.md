@@ -1,3 +1,15 @@
+---
+lab:
+  title: Lab 1 - GitHub Copilot Modernization for Java - Migrate to Azure
+  description: In order to execute this lab, you will need a Github account with Github Copilot enabled. If you do not have one, please create one form here -+++https://github.com/signup+++
+  duration: 5 minutes
+  level: 200
+  islab: true
+  primarytopics:
+    - Azure
+    - GitHub
+---
+
 # Lab 1 - GitHub Copilot Modernization for Java - Migrate to Azure
 
 This lab walks through assessing and migrating the sample Java
