@@ -90,7 +90,7 @@ The GitHub Copilot Modernization extension is what will help in modernizing the 
 
 In this task, you will use **GitHub Copilot for App Modernization** in Visual Studio Code to analyze an existing Java application and evaluate its readiness for modernization and cloud migration.
 
-1.  Open VSCode and click on **Select Folder**.
+1.  From the VSCode, click on **Open Folder**.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image6.png)
 
