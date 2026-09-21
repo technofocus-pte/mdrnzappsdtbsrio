@@ -174,7 +174,7 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image16.png)
 
-7. You might get a **warning** as in the below screenshot regarding the **model availablilit**y and **RBAC assignments**. Select **Yes** to continue with the deployment.
+7. You might get a **warning** as in the below screenshot regarding the **model availablility** and **RBAC assignments**. Select **Yes** to continue with the deployment.
    
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image61.png)
