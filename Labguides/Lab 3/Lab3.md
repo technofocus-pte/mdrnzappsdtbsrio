@@ -337,7 +337,7 @@ application is functioning properly, proceed with the deployment.
 
     - "SearchServiceUrl": "< value-of-SEARCH_SERVICE_ENDPOINT >",
 
-    - "SearchIndexName": **rag index name (Objects name prefix)** you copied and saved in the last task 
+    - "SearchIndexName": "< Value of SEARCH_INDEX_NAME >"
     
     ![A screenshot of a computer AI-generated content may be
       incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image42.png)
