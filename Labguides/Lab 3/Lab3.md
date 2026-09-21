@@ -155,31 +155,32 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image14.png)
 
-4.  In the terminal, execute the following two commands to provision the
-    Azure resources with the AZD template:
+4.  In the terminal, execute the below command to set the Resource group name.
 
     +++azd env set AZURE_RESOURCE_GROUP @lab.CloudResourceGroup(ResourceGroup2).Name+++
 
+5.  When prompted, enter the environment name.
+
+    - **Enter a new environment Name:** +++blazorenv@lab.LabInstance.Id+++
+
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image62.png)
+
+7.  Execute the below command to provision the Azure resources.
+
     +++azd provision+++
 
+	Select the **subscription**, @lab.CloudSubscription.Name when prompted.
+
     ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image15.png)
+incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image64.png)
 
-6.  When prompted, enter the following details:
-
-	- **Enter a new environment Name:** +++blazorenv@lab.LabInstance.Id+++
-
-    - **Select Azure Subscription to use:** @lab.CloudSubscription.Name
-      
-    ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image16.png)
-
-7. You might get a **warning** as in the below screenshot regarding the **model availablility** and **RBAC assignments**. Select **Yes** to continue with the deployment.
+9. You might get a **warning** as in the below screenshot regarding the **model availablility** and **RBAC assignments**. Select **Yes** to continue with the deployment.
    
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image61.png)
 
-9.  Wait for the deployment to complete; it will take 5-10 mins. This
+10.  Wait for the deployment to complete; it will take 5-10 mins. This
     process will:
 
     - Create all required Azure resources.
