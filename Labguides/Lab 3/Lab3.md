@@ -410,7 +410,7 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
 With the application fully deployed and configured, you can now test the
 RAG functionality:
 
->[!Alert] **Important:** If you face any **issue** in the app getting rendered or **results** getting rendered, please open the **App Service** from the Resource Group2 -> Select **Environment variables** under **Settings** and check that the variables are set properly. If for some reason they are not updated, please do that manually once and reexecute.
+>[!Alert] **Important:** If you face any **issue** in the app getting rendered or **results** getting rendered, please open the **App Service** from the Resource Group2 -> >Select **Environment variables** under **Settings** and check that the variables are set properly. If for some reason they are not updated, please do that manually once >and reexecute.
 
 1.  Open the application URL provided at the end of the deployment. When
     the prompt appears asking, 'Do you want Code to open the external
