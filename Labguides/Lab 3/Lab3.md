@@ -251,16 +251,11 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image26.png)
 
-8.  Copy the URI and save it in the Notepad for future use.
-
-    ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image27.png)
-
-9.  Select **Import data(new)** to start the process of creating a
+9.  Select **Import data** to start the process of creating a
     search index from the overview page.
 
     ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image28.png)
+incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image65.png)
 
 10. Select **Azure Blob Storage** as the Data Source.
 
@@ -279,14 +274,14 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image31.png)
 
-13. Choose your **Azure OpenAI service** and
+13. Choose your **Microsoft Foundry service/project** and
     select **text-embedding-ada-002** as the embedding model. The AZD
     template has already deployed this model. Then, select **System
-    assigned identity** for authentication and check the acknowledgement
+    assigned identity** for authentication and check the **acknowledgement**
     checkbox for additional costs. Click on the **Next** button.
 
     ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image32.png)
+incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image66.png)
 
 14. In the **Vectorize and enrich your images** step, keep the default
     settings as it is and select **Next**.
@@ -311,26 +306,12 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image36.png)
 
-18. Again, open the resource group and select Azure OpenAI service.
-
-    ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image37.png)
-
-19. Select the **Endpoint** and then copy the value of the endpoint in
-    Notepad for future use.
-
-    ![A screenshot of a computer AI-generated content may be
-    incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image38.png)
-
-    ![A screenshot of a computer AI-generated content may be
-    incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image39.png)
-
 21. Navigate to Codespace terminal and set the search index name as an AZD environment variable:
 
     +++azd env set SEARCH_INDEX_NAME < your-search-index-name >+++
 
-    >[!Note] Replace < your-search-index-name > with the index name you
-copied previously. AZD uses this variable in subsequent deployments to
+    >[!Note] Replace **< your-search-index-name >** with the rag index name (Objects name prefix) you
+copied earlier in this task. AZD uses this variable in subsequent deployments to
 set the App Service app setting.
 
     ![A screenshot of a computer AI-generated content may be
@@ -352,11 +333,11 @@ application is functioning properly, proceed with the deployment.
 2.  Open **appsettings.Development.json.** Using the terminal output,
     update the values of:
 
-    - "OpenAIEndpoint": "<value-of-OPENAI_ENDPOINT>"
+    - "OpenAIEndpoint": "< value-of-OPENAI_ENDPOINT >"
 
-    - "SearchServiceUrl": "<value-of-SEARCH_SERVICE_ENDPOINT>",
+    - "SearchServiceUrl": "< value-of-SEARCH_SERVICE_ENDPOINT >",
 
-    - "SearchIndexName": "<value-of-SEARCH_INDEX_NAME>", 
+    - "SearchIndexName": **rag index name (Objects name prefix)** you copied and saved in the last task 
     
     ![A screenshot of a computer AI-generated content may be
       incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image42.png)
@@ -413,7 +394,9 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
     +++azd env set AZURE_RESOURCE_GROUP ResourceGroup2+++
 
     +++azd up+++
-	
+
+	Select **Yes** to continue with the deployment.
+
 	>[!Alert] When asked to create a new resource group, Select **Enter**.
 	> ( **ResourceGroup2** should be the default selection )
 	
