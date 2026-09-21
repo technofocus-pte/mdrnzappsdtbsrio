@@ -158,7 +158,7 @@ about the application.
 15. The **Issue Summary** section lists down the issues in 2 categories
     **– Cloud Readiness** and **Java Upgrade**.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image19.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image67.png)
 
 16. Scroll down to see the details on the issues. You will see the **issues** under the **Cloud Readiness category** and there are
     none under Java Upgrade category.
