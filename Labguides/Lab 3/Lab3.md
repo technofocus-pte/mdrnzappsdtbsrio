@@ -180,7 +180,12 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image16.png)
 
-8.  Wait for the deployment to complete; it will take 5-10 mins. This
+7. You might get **warning** as in the below screenshot regarding the **model availablilit**y and **RBAC assignments**. Select **Yes** to continue with the deployment.
+   
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image61.png)
+
+9.  Wait for the deployment to complete; it will take 5-10 mins. This
     process will:
 
     - Create all required Azure resources.
