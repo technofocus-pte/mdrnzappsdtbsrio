@@ -133,7 +133,10 @@ In this task, you will use **GitHub Copilot for App Modernization** in Visual St
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image63.png)
 
+13. Select **OK** under Recommended Assessment at the top.
 
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image64.png)
+    
 12. Check the progress of the assessment.
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image15.png)
@@ -165,10 +168,9 @@ about the application.
 17. Expand each section to see what the issue is and how it can be
     resolved.
 
-18. First issue is on the **Database Migration (PostgreSQL)** and the
-    **Solution** is to migrate to **Azure Database for PostgreSQL**
+18. First issue is on the **PostgreSQL database** and will have an associated **Solution**.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image21.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image65.png)
 
 19. When you further check the PostgreSQL database found option, you
     will see how many files are impacted and also a detailed
@@ -214,11 +216,11 @@ about the application.
 
 In this task, you will use **GitHub Copilot for App Modernization** to migrate the application’s database configuration from **PostgreSQL** to **Azure Database for PostgreSQL** – Flexible Server.
 
-1.  We will start with the **Database Migration**. Select **Run Task**
-    against the Database Migration(PostgreSQL) issue that is listed
+1.  We will start with the resolution of the **PostgreSQL** issue. Select **Run Task**
+    against the **PostgreSQL database found** issue that is listed
     under **Issues** -> **Issue Category** in the Assessment Report.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image31.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image66.png)
 
 2.  The task will start and the details will get populated in the chat
     window.
