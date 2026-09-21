@@ -155,12 +155,6 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image14.png)
 
-1. In the Github codespace, open the **infra** folder on the left hand side and select the **main.bicep** file. Verify line 8 uses the correct unique suffix for naming resources by using **tags.LabInstance**. If you notice line 8 still reads as: param resourceToken string = **uniqueString(resourceGroup().id, environmentName)**,
-please change **uniqueString(resourceGroup().id, environmentName)** to +++resourceGroup().tags.LabInstance+++ and select **ctrl+s** to save the change.
-
-    ![A screenshot of a computer AI-generated content may be
-incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image60.png)
-
 4.  In the terminal, execute the following two commands to provision the
     Azure resources with the AZD template:
 
@@ -180,7 +174,7 @@ incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/r
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image16.png)
 
-7. You might get **warning** as in the below screenshot regarding the **model availablilit**y and **RBAC assignments**. Select **Yes** to continue with the deployment.
+7. You might get a **warning** as in the below screenshot regarding the **model availablilit**y and **RBAC assignments**. Select **Yes** to continue with the deployment.
    
     ![A screenshot of a computer AI-generated content may be
 incorrect.](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%203/media/image61.png)
