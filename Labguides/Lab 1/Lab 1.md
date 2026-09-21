@@ -124,13 +124,6 @@ In this task, you will use **GitHub Copilot for App Modernization** in Visual St
 
     ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image12.png)
 
-10. Select the drop down next to Auto in the GitHub chat to select the
-    model. **Claude Sonnet 4.5** works best for App modernization. If
-    you have a premium GitHub license, you can select that. Else, you
-    can select **Claude Haiku 4.5**.
-
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%201/media/image13.png)
-
 11. From the Quick Start section of GitHub Copilot Modernization,
     select **Start Assessment**.
 
