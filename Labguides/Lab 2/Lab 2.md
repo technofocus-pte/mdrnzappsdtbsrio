@@ -225,10 +225,9 @@ deploy a model to be used.
 
     - TAP - +++@lab.CloudPortalCredential(User1).AccessToken+++
 
-2.  In the Select a project to continue dialog, select **Create a new
-    project**.
+2.  The Select **Create a project** wizard opens. **Ignore** the **policy errors** that appear and scroll down to the **Project name** field.
 
-    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image29.png)
+    ![](https://raw.githubusercontent.com/technofocus-pte/mdrnzappsdtbsrio/refs/heads/main/Labguides/Lab%202/media/image57.png)
 
 3.  Enter the project name as +++proj@lab.LabInstance.Id+++, select
     the Resource group as **ResourceGroup1** and then select **Create**.
